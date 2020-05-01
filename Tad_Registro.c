@@ -40,10 +40,10 @@ REGISTRO* cria_Registro(){
 
     reg->idNascimento = -1;
     reg->idadeMae = -1;
-    reg->dataNascimento[0]= "\0";
-    reg->sexoBebe = "\0";
-    reg->estadoMae[0] = "\0";
-    reg->estadoBebe[0] = "\0";
+    reg->dataNascimento[0]= '\0';
+    reg->sexoBebe = '\0';
+    reg->estadoMae[0] = '\0';
+    reg->estadoBebe[0] = '\0';
     reg->cidadeMae = NULL;
     reg->cidadeBebe = NULL;
 
@@ -173,19 +173,6 @@ char* getCidadeMae_Registro(REGISTRO* reg){
 }
 
 /* 
-    Retorna o atributo CidadeMae de um ponteiro para registro reg
-
-    Parametros:
-    [in]REGISTRO* reg
-
-    Retorno:
-    char* CidadeMae
-*/
-char* getCidadeMae_Registro(REGISTRO* reg){
-    return reg->cidadeMae;
-}
-
-/* 
     Retorna o atributo CidadeBebe de um ponteiro para registro reg
 
     Parametros:
@@ -229,18 +216,7 @@ void setIdadeMae_Registro(REGISTRO* reg, int idadeMae){
     [in]REGISTRO* reg
     [in]int SexoBebe
 */
-void setSexoBebe_Registro(REGISTRO* reg, int sexoBebe){
-    reg->sexoBebe = sexoBebe;
-}
-
-/* 
-    atribui o atributo SexoBebe de um ponteiro para registro reg
-
-    Parametros:
-    [in]REGISTRO* reg
-    [in]int SexoBebe
-*/
-void setSexoBebe_Registro(REGISTRO* reg, int sexoBebe){
+void setSexoBebe_Registro(REGISTRO* reg, char sexoBebe){
     reg->sexoBebe = sexoBebe;
 }
 
@@ -299,7 +275,7 @@ void setEstadoBebe_Registro(REGISTRO* reg, char estadoBebe[2]){
     [in]REGISTRO* reg
     [in]char* cidadeBebe
 */
-void setCidadeBebe_Registro(REGISTRO* reg, char cidadeBebe){
+void setCidadeBebe_Registro(REGISTRO* reg, char* cidadeBebe){
 
    reg->cidadeBebe = cidadeBebe;
 
@@ -312,7 +288,7 @@ void setCidadeBebe_Registro(REGISTRO* reg, char cidadeBebe){
     [in]REGISTRO* reg
     [in]char* cidadeMae
 */
-void setcidadeMae_Registro(REGISTRO* reg, char cidadeMae){
+void setCidadeMae_Registro(REGISTRO* reg, char* cidadeMae){
 
    reg->cidadeMae = cidadeMae;
 
@@ -329,12 +305,15 @@ void setcidadeMae_Registro(REGISTRO* reg, char cidadeMae){
 void print_Registro(REGISTRO* reg){
     printf("idNascimento: %d\n",reg->idNascimento);
     printf("idadeMae: %d\n",reg->idadeMae);
-    printDataNascimento_Registro(reg);
-    printf("%c",reg->sexoBebe);
-    printEstadoMae_Registro(reg);
-    printEstadoBebe_Registro(reg);
-    printf("cidadeMae: %s",reg->cidadeMae);
-    printf("cidadeBebe: %s",reg->cidadeBebe);
+    printf("DataNascimento %.*s\n",10,reg->dataNascimento);
+    // printDataNascimento_Registro(reg);
+    printf("sexoBebe: %c\n",reg->sexoBebe);
+    printf("EstadoMae: %.*s\n",2,reg->estadoMae);
+    printf("EstadoBebe: %.*s\n",2,reg->estadoBebe);
+    // printEstadoMae_Registro(reg);
+    // printEstadoBebe_Registro(reg);
+    printf("cidadeMae: %s\n",reg->cidadeMae);
+    printf("cidadeBebe: %s\n",reg->cidadeBebe);
 
 }
 
@@ -343,27 +322,30 @@ void printDataNascimento_Registro(REGISTRO* reg){
     printf("dataNascimento: ");
     for (int i = 0; i < 10; i++)
     {
-        printf("%c",reg->dataNascimento[i]);
+        putchar(reg->dataNascimento[i]);
+        // printf("%c",reg->dataNascimento[i]);
     }
     printf("\n");
 }
 
 void printEstadoMae_Registro(REGISTRO* reg){
     
-    printf("dataEstadoMae: ");
+    printf("EstadoMae: ");
     for (int i = 0; i < 2; i++)
     {
-        printf("%c",reg->estadoMae[2]);
+        putchar(reg->estadoMae[i]);
+        // printf("%c",reg->estadoMae[i]);
     }
     printf("\n");
 }   
 
 void printEstadoBebe_Registro(REGISTRO* reg){
     
-    printf("dataEstadoMae: ");
+    printf("EstadoBebe: ");
     for (int i = 0; i < 2; i++)
     {
-        printf("%c",reg->estadoBebe[2]);
+        putchar(reg->estadoBebe[i]);
+        // printf("%c",reg->estadoBebe[i]);
     }
     printf("\n");
 }   

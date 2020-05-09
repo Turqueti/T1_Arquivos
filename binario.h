@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdio.h>
 #include <string.h>
+#include "Tad_Registro.h"
 
 FILE* cria_binario(char* nomeArquivo);
 FILE* fecha_binario(FILE *file);

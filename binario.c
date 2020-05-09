@@ -65,6 +65,18 @@ FILE* escreveLixo(FILE *file, int quantidade)
     return file;
 }
 
+FILE* abreLeitura_Binario(char *nomeArquivo)
+{
+    FILE *file;
+    file = fopen(nomeArquivo, "rb");
+    return file;
+}
+
+REGISTRO* getRegistro_Binario(FILE *file, int ID)
+{
+
+}
+
 void insere_binario(FILE *file, int idNasc, int idadeM, char dataNascimento[10], char sexoBebe, char estadoMae[2], char estadoBebe[2], char *cidadeMae, char *cidadeFilho)
 {
     int tam1 = strlen(cidadeMae) +1;
@@ -78,7 +90,7 @@ void insere_binario(FILE *file, int idNasc, int idadeM, char dataNascimento[10],
     fwrite(cidadeMae, tam1 * sizeof(char), strlen(cidadeMae), file);
     fwrite(cidadeFilho, tam2 * sizeof(char), strlen(cidadeFilho), file);
 
-    file = escreveLixo(file - 1, ( (104 - ftell(file))));
+    file = escreveLixo(file - 1, ( (104 - ftell(file)))); //TODO: Verificar se esta certo
     
     fwrite(&idNasc, sizeof(int), 1, file);
     fwrite(&idadeM, sizeof(int), 1, file);

@@ -74,6 +74,25 @@ FILE* abreLeitura_Binario(char *nomeArquivo)
 
 REGISTRO* getRegistro_Binario(FILE *file, int ID)
 {
+    fseek(file, 0, SEEK_END);
+    if(ftell(file) < 128) return NULL;
+
+    int tam1, tam2;
+    char *cidMae, *cidBB;
+    //REGISTRO *reg;
+    //reg = cria_Registro();
+
+    fseek(file, 128 + (ID * 128), SEEK_SET);
+
+    fread(&tam1, sizeof(int), 1,  file);
+    if(tam1 == -1)return NULL;
+    fread(&tam2, sizeof(int), 1,  file);
+
+    cidMae = malloc(sizeof(char) * tam1);
+    cidBB = malloc(sizeof(char) * tam2);
+    
+    fread(cidMae, tam1, 1, file);
+    fread(cidBB, tam2, 1, file);
 
 }
 
@@ -81,14 +100,13 @@ void insere_binario(FILE *file, int idNasc, int idadeM, char dataNascimento[10],
 {
     int tam1 = strlen(cidadeMae) +1;
     int tam2 = strlen(cidadeFilho) +1;
-    char lixo = '$';
 
     fseek(file, 0, SEEK_END);
 
     fwrite(&tam1, sizeof(int), 1, file);
     fwrite(&tam2, sizeof(int), 1, file);
-    fwrite(cidadeMae, tam1 * sizeof(char), strlen(cidadeMae), file);
-    fwrite(cidadeFilho, tam2 * sizeof(char), strlen(cidadeFilho), file);
+    fwrite(cidadeMae, tam1 * sizeof(char), 1, file);
+    fwrite(cidadeFilho, tam2 * sizeof(char), 1, file);
 
     file = escreveLixo(file - 1, ( (104 - ftell(file)))); //TODO: Verificar se esta certo
     

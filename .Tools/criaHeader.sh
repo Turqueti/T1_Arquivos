@@ -12,7 +12,7 @@ createTypeDefs(){
 }
 
 createFunctionHeaders(){
-    awk '/^[^[:space:],struct].*[\)\{]/{gsub(/\{/,"");gsub(/[[:space:]]$/,"");print $0";"}' $C_FILENAME
+    awk '/^[^[:space:],s].*[\)\{]/{gsub(/\{/,"");gsub(/[[:space:]]$/,"");print $0";"}' $C_FILENAME
 }
 
 createDefine(){

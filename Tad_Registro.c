@@ -119,12 +119,8 @@ int getSexoBebe_Registro(REGISTRO* reg){
     [out]char retorno[10]
 
 */
-void getDataNascimento_Registro(REGISTRO* reg,char retorno[10]){
-    for (int i = 0; i < 10; i++)
-    {
-        retorno[i] = reg->dataNascimento[i];
-    }
-    
+char* getDataNascimento_Registro(REGISTRO* reg){
+    return reg->dataNascimento;
 }
 
 /* 
@@ -135,12 +131,8 @@ void getDataNascimento_Registro(REGISTRO* reg,char retorno[10]){
     [out]char retorno[2]
 
 */
-void getEstadoMae_Registro(REGISTRO* reg,char retorno[2]){
-    for (int i = 0; i < 2; i++)
-    {
-        retorno[i] = reg->estadoMae[i];
-    }
-    
+char* getEstadoMae_Registro(REGISTRO* reg){
+    return reg->estadoMae;
 }
 
 /* 
@@ -151,12 +143,8 @@ void getEstadoMae_Registro(REGISTRO* reg,char retorno[2]){
     [out]char retorno[2]
 
 */
-void getEstadoBebe_Registro(REGISTRO* reg,char retorno[2]){
-    for (int i = 0; i < 2; i++)
-    {
-        retorno[i] = reg->estadoBebe[i];
-    }
-    
+char* getEstadoBebe_Registro(REGISTRO* reg){
+    return reg->estadoBebe;
 }
 
 /* 

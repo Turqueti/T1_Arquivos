@@ -26,8 +26,6 @@ char* strtok_new(char * string, char const * delimitador){
     return ret;
 }
 
-
-
 REGISTRO* parseLine_csv2Reg(char* linha){
     REGISTRO* reg;
     reg = cria_Registro();
@@ -47,40 +45,40 @@ REGISTRO* parseLine_csv2Reg(char* linha){
         {
             tempVet[i] = "-";
         }
-        printf("tempvet[%d]: %s\n",i,tempVet[i]);
+        //printf("tempvet[%d]: %s\n",i,tempVet[i]);
         token = strtok_new(NULL, delimitador);
     }
     
     //cidadeMae,cidadeBebe,idNascimento,idadeMae,dataNascimento,sexoBebe,estadoMae,estadoBebe
-    if (tempVet[0] != "-")
+    if (strcmp(tempVet[0],"-"))
     {
         setCidadeMae_Registro(reg,tempVet[0]);
     }
-    if (tempVet[1] != "-")
+    if (strcmp(tempVet[1],"-"))
     {
         setCidadeBebe_Registro(reg,tempVet[1]);
     }
-    if (tempVet[2] != "-")
+    if (strcmp(tempVet[2],"-"))
     {
         setIdNascimento_Registro(reg,atoi(tempVet[2]));
     }
-    if (tempVet[3] != "-")
+    if (strcmp(tempVet[3],"-"))
     {
         setIdadeMae_Registro(reg,atoi(tempVet[3]));
     }
-    if (tempVet[4] != "-")
+    if (strcmp(tempVet[4],"-"))
     {
         setDataNascimento_Registro(reg,tempVet[4]);
     }
-    if (tempVet[5] != "-")
+    if (strcmp(tempVet[5],"-"))
     {
         setSexoBebe_Registro(reg,tempVet[5][0]);
     }
-    if (tempVet[6] != "-")
+    if (strcmp(tempVet[6],"-"))
     {
         setEstadoMae_Registro(reg,tempVet[6]);
     }
-    if (tempVet[7] != "-")
+    if (strcmp(tempVet[7],"-"))
     {
         setEstadoBebe_Registro(reg,tempVet[7]);
     }

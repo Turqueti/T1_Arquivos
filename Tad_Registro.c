@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Tad_Registro.h"
 
 
@@ -265,7 +266,10 @@ void setEstadoBebe_Registro(REGISTRO* reg, char estadoBebe[2]){
 */
 void setCidadeBebe_Registro(REGISTRO* reg, char* cidadeBebe){
 
-   reg->cidadeBebe = cidadeBebe;
+    int tam = strlen(cidadeBebe);
+    char* temp = (char*)malloc((sizeof(char)*tam)+1);
+    strcpy(temp,cidadeBebe);
+    reg->cidadeBebe = temp;
 
 }
 
@@ -278,7 +282,10 @@ void setCidadeBebe_Registro(REGISTRO* reg, char* cidadeBebe){
 */
 void setCidadeMae_Registro(REGISTRO* reg, char* cidadeMae){
 
-   reg->cidadeMae = cidadeMae;
+    int tam = strlen(cidadeMae);
+    char* temp = (char*)malloc((sizeof(char)*tam)+1);
+    strcpy(temp,cidadeMae);
+    reg->cidadeMae = temp;
 
 }
 

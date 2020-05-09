@@ -8,9 +8,11 @@ void free_Registro(REGISTRO* reg);
 int getIdNascimento_Registro(REGISTRO* reg);
 int getIdadeMae_Registro(REGISTRO* reg);
 int getSexoBebe_Registro(REGISTRO* reg);
-void getDataNascimento_Registro(REGISTRO* reg,char retorno[10]);
-void getEstadoMae_Registro(REGISTRO* reg,char retorno[2]);
-void getEstadoBebe_Registro(REGISTRO* reg,char retorno[2]);
+char* getDataNascimento_Registro(REGISTRO* reg);
+char* getEstadoMae_Registro(REGISTRO* reg);
+char* getEstadoBebe_Registro(REGISTRO* reg);
+char* getCidadeMae_Registro(REGISTRO* reg);
+char* getCidadeBebe_Registro(REGISTRO* reg);
 void setIdNascimento_Registro(REGISTRO* reg, int idNascimento);
 void setIdadeMae_Registro(REGISTRO* reg, int idadeMae);
 void setSexoBebe_Registro(REGISTRO* reg, char sexoBebe);
@@ -20,8 +22,5 @@ void setEstadoBebe_Registro(REGISTRO* reg, char estadoBebe[2]);
 void setCidadeBebe_Registro(REGISTRO* reg, char* cidadeBebe);
 void setCidadeMae_Registro(REGISTRO* reg, char* cidadeMae);
 void print_Registro(REGISTRO* reg);
-void printDataNascimento_Registro(REGISTRO* reg);
-void printEstadoMae_Registro(REGISTRO* reg);
-void printEstadoBebe_Registro(REGISTRO* reg);
 
 #endif

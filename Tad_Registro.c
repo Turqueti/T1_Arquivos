@@ -306,46 +306,9 @@ void print_Registro(REGISTRO* reg){
     printf("idNascimento: %d\n",reg->idNascimento);
     printf("idadeMae: %d\n",reg->idadeMae);
     printf("DataNascimento %.*s\n",10,reg->dataNascimento);
-    // printDataNascimento_Registro(reg);
     printf("sexoBebe: %c\n",reg->sexoBebe);
     printf("EstadoMae: %.*s\n",2,reg->estadoMae);
     printf("EstadoBebe: %.*s\n",2,reg->estadoBebe);
-    // printEstadoMae_Registro(reg);
-    // printEstadoBebe_Registro(reg);
     printf("cidadeMae: %s\n",reg->cidadeMae);
     printf("cidadeBebe: %s\n",reg->cidadeBebe);
-
 }
-
-void printDataNascimento_Registro(REGISTRO* reg){
-    
-    printf("dataNascimento: ");
-    for (int i = 0; i < 10; i++)
-    {
-        putchar(reg->dataNascimento[i]);
-        // printf("%c",reg->dataNascimento[i]);
-    }
-    printf("\n");
-}
-
-void printEstadoMae_Registro(REGISTRO* reg){
-    
-    printf("EstadoMae: ");
-    for (int i = 0; i < 2; i++)
-    {
-        putchar(reg->estadoMae[i]);
-        // printf("%c",reg->estadoMae[i]);
-    }
-    printf("\n");
-}   
-
-void printEstadoBebe_Registro(REGISTRO* reg){
-    
-    printf("EstadoBebe: ");
-    for (int i = 0; i < 2; i++)
-    {
-        putchar(reg->estadoBebe[i]);
-        // printf("%c",reg->estadoBebe[i]);
-    }
-    printf("\n");
-}   

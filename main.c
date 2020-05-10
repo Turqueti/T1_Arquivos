@@ -48,7 +48,7 @@ void csvHandler(char* fileName){
 
 void parse_command(char argumentos[3][30],int numArgumentos){
     char command[30];
-    fgets(command,30,stdin);
+    fgets(command,90,stdin);
     int i = 0;
     char delim[] = " \n";
     char* temp;
@@ -83,20 +83,45 @@ void menu(){
 }
 
 
+void funcionalidade2(char* binFile){
+    REGISTRO* regtemp;
+    FILE* binario;
+    int qntdRegistros;
+
+    binario = abreLeitura_Binario("agoravai.bin");
+    if (binario != NULL)
+    {
+        fseek(binario,5,SEEK_SET);
+        fread(&qntdRegistros,sizeof(int),1,binario);
+        for (int i = 1; i < qntdRegistros; i++)
+        {
+            regtemp = getRegistro_Binario(binario,i);
+            print_Registro(regtemp);
+        }
+        
+
+    }
+            
+
+
+}
+
 int main(int argc, char const *argv[])
 {
     csvHandler("test.csv");
 
-    menu();
+    // menu();
   
-    REGISTRO* regTemp;
+    // REGISTRO* regTemp;
 
-    FILE *binario;
-    binario = abreLeitura_Binario("agoravai.bin");
-    for (int i = 1; i < 6; i++)
-    {
-        regTemp = getRegistro_Binario(binario, i);
-        print_Registro(regTemp);
-    }
+    // FILE *binario;
+    // binario = abreLeitura_Binario("agoravai.bin");
+    // for (int i = 1; i < 6; i++)
+    // {
+    //     regTemp = getRegistro_Binario(binario, i);
+    //     print_Registro(regTemp);
+    // }
+
+    funcionalidade2("agoravai.bin");
     return 0;
 }

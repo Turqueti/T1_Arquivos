@@ -48,9 +48,9 @@ void atualizaNReg(FILE *file)
 
     fread(&nReg, sizeof(int), 1, file);
     nReg++;
+    fseek(file, N_REG_INSER, SEEK_SET);
     fwrite(&nReg, sizeof(int), 1, file);
     return;
-
 }
 
 FILE* escreveLixo(FILE *file, int quantidade)

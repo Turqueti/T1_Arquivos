@@ -39,6 +39,43 @@ void csvHandler(char* fileName){
 
 }
 
+void parse_command(char argumentos[3][30],int numArgumentos){
+    char command[30];
+    fgets(command,30,stdin);
+    int i = 0;
+    char delim[] = " \n";
+    char* temp;
+
+
+    temp = strtok(command,delim);
+    while(temp != NULL){
+        strcpy(argumentos[i],temp);
+        temp = strtok(NULL,delim);
+        i++;
+    }
+    numArgumentos = i + 1;
+
+}
+
+
+void menu(){
+    char argumentos[3][30];
+    int numArgs = 0;
+    while(1){
+        parse_command(argumentos,numArgs);
+        if(!strcmp(argumentos[0],"0")){
+            printf("corno\n");
+        }
+        if(!strcmp(argumentos[0],"1")){
+            printf("d++++\n");
+        }
+        if(!strcmp(argumentos[0],"2")){
+            break;
+        }
+    }
+}
+
+
 int main(int argc, char const *argv[])
 {
 
@@ -51,9 +88,11 @@ int main(int argc, char const *argv[])
 
     // free_Registro(reg);
 
-    char FileName[] = "test.csv";
+    // char FileName[] = "test.csv";
 
-    csvHandler(FileName);
+    // csvHandler(FileName);
 
+
+    menu();
     return 0;
 }

@@ -123,7 +123,7 @@ void insere_binario(FILE *file, REGISTRO *reg)
     int idNascimento = getIdNascimento_Registro(reg);
     int idadeMae = getIdadeMae_Registro(reg);
     char dataNascimento[10];
-    strncpy(dataNascimento, getDataNascimento_Registro(reg),2);
+    strncpy(dataNascimento, getDataNascimento_Registro(reg),10);
     char sexoBebe = getSexoBebe_Registro(reg);
     char estadoMae[2];
     strncpy(estadoMae, getEstadoMae_Registro(reg),2);

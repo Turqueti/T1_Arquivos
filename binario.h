@@ -11,6 +11,8 @@ FILE* fecha_binario(FILE *file);
 void atualizaProxReg(FILE *file);
 void atualizaNReg(FILE *file);
 FILE* escreveLixo(FILE *file, int quantidade);
-void insere_binario(FILE *file, int idNasc, int idadeM, char dataNascimento[10], char sexoBebe, char estadoMae[2], char estadoBebe[2], char *cidadeMae, char *cidadeFilho);
+void insere_binario(FILE *file, REGISTRO *reg);
+REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado);
+FILE* abreLeitura_Binario(char *nomeArquivo);
 
 #endif

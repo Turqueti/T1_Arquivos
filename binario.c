@@ -55,10 +55,8 @@ void atualizaNReg(FILE *file)
 
 FILE* escreveLixo(FILE *file, int quantidade)
 {
-    char zero = '\0';
     char lixo = '$';
-    fwrite(&zero, 1, 1, file);
-    for (int i = 1; i < quantidade; i++)
+    for (int i = 0; i < quantidade; i++)
     {
         fwrite(&lixo, 1, 1, file);
     }
@@ -76,7 +74,7 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
 {
     fseek(file, 0, SEEK_END);
     if(ftell(file) < 128 + (ID_Desejado * 128)) return NULL;
-    
+
     int tam1, tam2;
     int idNascimento;
     int idadeMae;
@@ -86,7 +84,7 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
     char estadoBebe[2];
     char cidMae[101], cidBB[101];
 
-    fseek(file, 128 + (ID_Desejado * 128), SEEK_SET);
+    fseek(file, 128 + ((ID_Desejado - 1) * 128), SEEK_SET);
 
     fread(&tam1, sizeof(int), 1,  file);
     if(tam1 == -1)return NULL;
@@ -98,7 +96,7 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
     fread(cidMae, tam1, 1, file);
     fread(cidBB, tam2, 1, file);
 
-    fseek(file, 128 + (ID_Desejado * 128) + 105, SEEK_SET);
+    fseek(file, (104 - (tam1+tam2+2)), SEEK_CUR);
 
     fread(&idNascimento, sizeof(int), 1, file);
     fread(&idadeMae, sizeof(int), 1, file);
@@ -119,22 +117,33 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
     return reg;
 }
 
-void insere_binario(FILE *file, int idNasc, int idadeM, char dataNascimento[10], char sexoBebe, char estadoMae[2], char estadoBebe[2], char *cidadeMae, char *cidadeFilho)
+void insere_binario(FILE *file, REGISTRO *reg)
 {
-    int tam1 = strlen(cidadeMae) +1;
-    int tam2 = strlen(cidadeFilho) +1;
+    int idNascimento = getIdNascimento_Registro(reg);
+    int idadeMae = getIdadeMae_Registro(reg);
+    char dataNascimento[10];
+    strncpy(dataNascimento, getDataNascimento_Registro(reg),2);
+    char sexoBebe = getSexoBebe_Registro(reg);
+    char estadoMae[2];
+    strncpy(estadoMae, getEstadoMae_Registro(reg),2);
+    char estadoBebe[2];
+    strncpy(estadoBebe,getEstadoBebe_Registro(reg),2);
+    char *cidMae, *cidBB;
+    cidMae = getCidadeMae_Registro(reg);
+    cidBB = getCidadeBebe_Registro(reg);
+    int tam1 = strlen(cidMae) +1;
+    int tam2 = strlen(cidBB) +1;
 
     fseek(file, 0, SEEK_END);
 
     fwrite(&tam1, sizeof(int), 1, file);
     fwrite(&tam2, sizeof(int), 1, file);
-    fwrite(cidadeMae, tam1 * sizeof(char), 1, file);
-    fwrite(cidadeFilho, tam2 * sizeof(char), 1, file);
-
-    file = escreveLixo(file - 1, ( (104 - ftell(file)))); //TODO: Verificar se esta certo
+    fwrite(cidMae, tam1 * sizeof(char), 1, file);
+    fwrite(cidBB, tam2 * sizeof(char), 1, file);
+    file = escreveLixo(file, ( (104 - (tam1+tam2+2)))); //TODO: Verificar se esta certo
     
-    fwrite(&idNasc, sizeof(int), 1, file);
-    fwrite(&idadeM, sizeof(int), 1, file);
+    fwrite(&idNascimento, sizeof(int), 1, file);
+    fwrite(&idadeMae, sizeof(int), 1, file);
 
     if(strlen(dataNascimento) > 0)
         fwrite(dataNascimento,10 * sizeof(char), 1, file);

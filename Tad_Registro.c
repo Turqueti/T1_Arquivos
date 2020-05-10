@@ -298,6 +298,7 @@ void setCidadeMae_Registro(REGISTRO* reg, char* cidadeMae){
     [in]Registro* reg
 */
 void print_Registro(REGISTRO* reg){
+    // printf("----------------------------------------------------------------------------\n");
     printf("idNascimento: %d\n",reg->idNascimento);
     printf("idadeMae: %d\n",reg->idadeMae);
     printf("DataNascimento %.*s\n",10,reg->dataNascimento);

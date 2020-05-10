@@ -34,9 +34,9 @@ REGISTRO* parseLine_csv2Reg(char* linha){
     char delimitador[] = ",\n";
 
     token = strtok_new(linha,delimitador);
-    
-    for (int i = 0; i < 8; i++)
-    {
+    int i = 0;
+
+    while(token != NULL){
         if (*token)
         {
             tempVet[i] = token;
@@ -45,9 +45,25 @@ REGISTRO* parseLine_csv2Reg(char* linha){
         {
             tempVet[i] = "-";
         }
+        i++;
         //printf("tempvet[%d]: %s\n",i,tempVet[i]);
         token = strtok_new(NULL, delimitador);
+
     }
+    
+    // for (int i = 0; i < 8; i++)
+    // {
+    //     if (*token)
+    //     {
+    //         tempVet[i] = token;
+            
+    //     }else
+    //     {
+    //         tempVet[i] = "-";
+    //     }
+    //     //printf("tempvet[%d]: %s\n",i,tempVet[i]);
+    //     token = strtok_new(NULL, delimitador);
+    // }
     
     //cidadeMae,cidadeBebe,idNascimento,idadeMae,dataNascimento,sexoBebe,estadoMae,estadoBebe
     if (strcmp(tempVet[0],"-"))

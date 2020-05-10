@@ -23,46 +23,42 @@ void csvHandler(char* fileName){
 
     REGISTRO* regTemp;
 
+    FILE *binario;
+    binario = cria_binario("agoravai.bin");
 
     while ((read = getline(&line, &len, fp)) != -1) {
         regTemp = parseLine_csv2Reg(line);
+
+        insere_binario(binario, regTemp);
         //print_Registro(regTemp);
         //funcs que colocam o registro no binario
         free_Registro(regTemp);
     }
 
+    binario = fecha_binario(binario);
+
     fclose(fp);
     
-    if (line)
+    if (line != NULL)
         free(line);
-    
-    
+
+    return;
 
 }
 
 int main(int argc, char const *argv[])
 {
+    csvHandler("test.csv");
 
-    REGISTRO *reg, *teste;
-    char csvLine[] = "CACHOEIRA DO SUllL,CACHOEIRA DO SUL,1,33,,2,RS,RS\n";
-    reg = parseLine_csv2Reg(csvLine);
+    REGISTRO* regTemp;
 
     FILE *binario;
-    binario = cria_binario("agoravai.bin");
-    insere_binario(binario, reg);
-    binario = fecha_binario(binario);
     binario = abreLeitura_Binario("agoravai.bin");
-    teste = getRegistro_Binario(binario, 1);
-
-    print_Registro(teste);
-    // print_Registro(reg);
-    // printf("cidade mae: %s",getCidadeMae_Registro(reg));
-
-    // free_Registro(reg);
-
-    char FileName[] = "test.csv";
-
-    csvHandler(FileName);
-
+    for (int i = 1; i < 6; i++)
+    {
+        regTemp = getRegistro_Binario(binario, i);
+        print_Registro(regTemp);
+    }
+    
     return 0;
 }

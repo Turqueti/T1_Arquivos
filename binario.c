@@ -55,6 +55,7 @@ void atualizaNReg(FILE *file)
 
 FILE* escreveLixo(FILE *file, int quantidade)
 {
+    printf("\n QUANTIDADE= %d\n", quantidade);
     char lixo = '$';
     for (int i = 0; i < quantidade; i++)
     {
@@ -96,7 +97,7 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
     fread(cidMae, tam1, 1, file);
     fread(cidBB, tam2, 1, file);
 
-    fseek(file, (104 - (tam1+tam2+2)), SEEK_CUR);
+    fseek(file, (104 - (tam1+tam2+7)), SEEK_CUR);
 
     fread(&idNascimento, sizeof(int), 1, file);
     fread(&idadeMae, sizeof(int), 1, file);
@@ -140,7 +141,7 @@ void insere_binario(FILE *file, REGISTRO *reg)
     fwrite(&tam2, sizeof(int), 1, file);
     fwrite(cidMae, tam1 * sizeof(char), 1, file);
     fwrite(cidBB, tam2 * sizeof(char), 1, file);
-    file = escreveLixo(file, ( (104 - (tam1+tam2+2)))); //TODO: Verificar se esta certo
+    file = escreveLixo(file, ( (104 - (tam1+tam2+7)))); //TODO: Verificar se esta certo
     
     fwrite(&idNascimento, sizeof(int), 1, file);
     fwrite(&idadeMae, sizeof(int), 1, file);

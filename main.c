@@ -93,7 +93,7 @@ void funcionalidade2(char* binFile){
     {
         fseek(binario,5,SEEK_SET);
         fread(&qntdRegistros,sizeof(int),1,binario);
-        for (int i = 1; i < qntdRegistros; i++)
+        for (int i = 1; i <= qntdRegistros; i++)
         {
             regtemp = getRegistro_Binario(binario,i);
             print_Registro(regtemp);
@@ -108,9 +108,9 @@ void funcionalidade2(char* binFile){
 
 int main(int argc, char const *argv[])
 {
-    csvHandler("test.csv");
+    //csvHandler("test.csv");
 
-    // menu();
+    menu();
   
     // REGISTRO* regTemp;
 

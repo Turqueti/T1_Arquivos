@@ -266,6 +266,9 @@ void setEstadoBebe_Registro(REGISTRO* reg, char estadoBebe[2]){
 */
 void setCidadeBebe_Registro(REGISTRO* reg, char* cidadeBebe){
 
+    if(reg->cidadeBebe != NULL){
+        free(reg->cidadeBebe);
+    }
     int tam = strlen(cidadeBebe);
     char* temp = (char*)malloc((sizeof(char)*tam)+1);
     strcpy(temp,cidadeBebe);
@@ -282,6 +285,9 @@ void setCidadeBebe_Registro(REGISTRO* reg, char* cidadeBebe){
 */
 void setCidadeMae_Registro(REGISTRO* reg, char* cidadeMae){
 
+    if(reg->cidadeMae != NULL){
+        free(reg->cidadeMae);
+    }
     int tam = strlen(cidadeMae);
     char* temp = (char*)malloc((sizeof(char)*tam)+1);
     strcpy(temp,cidadeMae);

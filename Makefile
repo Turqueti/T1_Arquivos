@@ -5,7 +5,7 @@ run:
 wall:
 	gcc *.c *.h -o programaTrab -Wall
 debug:
-	bash ./.tools/criaheaderdeTodasAsFiles.sh
+	bash ./.Tools/criaHeaderTodas.sh
 	gcc *.c *.h -o programaTrab -g -Wall;
 	valgrind ./programaTrab
 

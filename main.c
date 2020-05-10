@@ -4,15 +4,16 @@
 #include "Tad_Registro.h"
 #include "csv2Reg.h"
 #include "binario.h"
+#include "binarioNaTela.h"
 
 
-void csvHandler(char* fileName){
+void csvHandler(char* entrada, char* saida){
     FILE* fp;
     char* line = NULL;
     size_t len = 0;
     size_t read;
 
-    fp = fopen(fileName,"r");
+    fp = fopen(entrada,"r");
     
     if(fp == NULL){
         printf("arquivo csv invalido");
@@ -24,14 +25,13 @@ void csvHandler(char* fileName){
     REGISTRO* regTemp;
 
     FILE *binario;
-    binario = cria_binario("agoravai.bin");
+    binario = cria_binario(saida);
 
     while ((read = getline(&line, &len, fp)) != -1) {
         regTemp = parseLine_csv2Reg(line);
 
         insere_binario(binario, regTemp);
-        //print_Registro(regTemp);
-        //funcs que colocam o registro no binario
+        
         free_Registro(regTemp);
     }
 
@@ -68,28 +68,26 @@ void parse_command(char argumentos[3][30],int numArgumentos){
 void menu(){
     char argumentos[3][30];
     int numArgs = 0;
-    while(1){
-        parse_command(argumentos,numArgs);
-        if(!strcmp(argumentos[0],"0")){
-            printf("corno\n");
-        }
-        if(!strcmp(argumentos[0],"1")){
-            printf("d++++\n");
-        }
-        if(!strcmp(argumentos[0],"2")){
-            break;
-        }
+    
+    parse_command(argumentos,numArgs);
+    if(!strcmp(argumentos[0],"0")){
+        printf("corno\n");
+    }
+    if(!strcmp(argumentos[0],"1")){
+        csvHandler(argumentos[1], argumentos[2]);
+        binarioNaTela(argumentos[2]);
+    }
+    if(!strcmp(argumentos[0],"2")){
+
     }
 }
 
 
 int main(int argc, char const *argv[])
 {
-    csvHandler("test.csv");
-
     menu();
   
-    REGISTRO* regTemp;
+    /*REGISTRO* regTemp;
 
     FILE *binario;
     binario = abreLeitura_Binario("agoravai.bin");
@@ -97,6 +95,6 @@ int main(int argc, char const *argv[])
     {
         regTemp = getRegistro_Binario(binario, i);
         print_Registro(regTemp);
-    }
+    }*/
     return 0;
 }

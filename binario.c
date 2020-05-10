@@ -55,7 +55,6 @@ void atualizaNReg(FILE *file)
 
 FILE* escreveLixo(FILE *file, int quantidade)
 {
-    printf("\n QUANTIDADE= %d\n", quantidade);
     char lixo = '$';
     for (int i = 0; i < quantidade; i++)
     {

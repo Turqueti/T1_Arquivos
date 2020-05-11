@@ -64,7 +64,6 @@ void parse_command(char argumentos[3][30],int numArgumentos){
 
 }
 
-
 void menu(){
     char argumentos[3][30];
     int numArgs = 0;
@@ -138,7 +137,6 @@ void formatPrintFunc2(REGISTRO* reg){
 
 }
 
-
 void funcionalidade2(char* binFile){
     REGISTRO* regtemp;
     FILE* binario;
@@ -160,8 +158,6 @@ void funcionalidade2(char* binFile){
         fecha_binario(binario);
     }
 }
-
-
 
 int main(int argc, char const *argv[])
 {

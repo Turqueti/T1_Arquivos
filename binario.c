@@ -93,9 +93,18 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
     REGISTRO *reg;
     reg = cria_Registro();
     
-    fread(cidMae, tam1, 1, file);
-    fread(cidBB, tam2, 1, file);
+    if(tam1 != 0)
+    {
+        fread(cidMae, tam1, 1, file);
+        setCidadeMae_Registro(reg, cidMae);
+    }
 
+    if(tam2 != 0)
+    {
+        fread(cidBB, tam2, 1, file);
+        setCidadeBebe_Registro(reg, cidBB);
+    }
+    
     fseek(file, (104 - (tam1+tam2+7)), SEEK_CUR);
 
     fread(&idNascimento, sizeof(int), 1, file);
@@ -104,9 +113,6 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
     fread(&sexoBebe, sizeof(char), 1, file);
     fread(estadoMae, 2 * sizeof(char), 1, file);
     fread(estadoBebe, 2 * sizeof(char), 1, file);
-
-    setCidadeMae_Registro(reg, cidMae);
-    setCidadeBebe_Registro(reg, cidBB);
 
     setIdNascimento_Registro(reg, idNascimento);
     setIdadeMae_Registro(reg, idadeMae);
@@ -130,13 +136,13 @@ void insere_binario(FILE *file, REGISTRO *reg)
     char estadoBebe[2];
     strncpy(estadoBebe,getEstadoBebe_Registro(reg),2);
     char *cidMae, *cidBB;
-    
+
     cidMae = getCidadeMae_Registro(reg);
     cidBB = getCidadeBebe_Registro(reg);
     if(cidMae == NULL) cidMae = &zero;
     if(cidBB == NULL) cidBB = &zero;
-    int tam1 = strlen(cidMae) +1;
-    int tam2 = strlen(cidBB) +1;
+    int tam1 = strlen(cidMae);
+    int tam2 = strlen(cidBB);
     fseek(file, 0, SEEK_END);
 
     fwrite(&tam1, sizeof(int), 1, file);

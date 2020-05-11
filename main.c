@@ -64,26 +64,6 @@ void parse_command(char argumentos[3][30],int numArgumentos){
 
 }
 
-void menu(){
-    char argumentos[3][30];
-    int numArgs = 0;
-    
-    parse_command(argumentos,numArgs);
-    if(!strcmp(argumentos[0],"0")){
-        printf("corno\n");
-    }
-    if(!strcmp(argumentos[0],"1")){
-        csvHandler(argumentos[1], argumentos[2]);
-        binarioNaTela(argumentos[2]);
-    }
-    if(!strcmp(argumentos[0],"2")){
-
-    }
-}
-
-
-
-
 void formatPrintFunc2(REGISTRO* reg){
     char SexoBebeREG = getSexoBebe_Registro(reg);
     char sexoBebeFormatado[10];
@@ -129,12 +109,6 @@ void formatPrintFunc2(REGISTRO* reg){
     //Nasceu em BAGRE/PA, em 2016-01-01, um bebê de sexo MASCULINO.
 
     printf("Nasceu em %s/%.*s, em %.*s, um bebê de sexo %s.\n",cidadeBebeREG,2,estadoBebeFormat,10,dataNascREG,sexoBebeFormatado);
-
-
-    
-    
-    
-
 }
 
 void funcionalidade2(char* binFile){
@@ -156,6 +130,23 @@ void funcionalidade2(char* binFile){
             free_Registro(regtemp);
         }
         fecha_binario(binario);
+    }
+}
+
+void menu(){
+    char argumentos[3][30];
+    int numArgs = 0;
+    
+    parse_command(argumentos,numArgs);
+    if(!strcmp(argumentos[0],"0")){
+        printf("corno\n");
+    }
+    if(!strcmp(argumentos[0],"1")){
+        csvHandler(argumentos[1], argumentos[2]);
+        binarioNaTela(argumentos[2]);
+    }
+    if(!strcmp(argumentos[0],"2")){
+        funcionalidade2(argumentos[1]);
     }
 }
 

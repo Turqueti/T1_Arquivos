@@ -119,6 +119,7 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
 
 void insere_binario(FILE *file, REGISTRO *reg)
 {
+    char zero = '\0';
     int idNascimento = getIdNascimento_Registro(reg);
     int idadeMae = getIdadeMae_Registro(reg);
     char dataNascimento[10];
@@ -129,11 +130,13 @@ void insere_binario(FILE *file, REGISTRO *reg)
     char estadoBebe[2];
     strncpy(estadoBebe,getEstadoBebe_Registro(reg),2);
     char *cidMae, *cidBB;
+    
     cidMae = getCidadeMae_Registro(reg);
     cidBB = getCidadeBebe_Registro(reg);
+    if(cidMae == NULL) cidMae = &zero;
+    if(cidBB == NULL) cidBB = &zero;
     int tam1 = strlen(cidMae) +1;
     int tam2 = strlen(cidBB) +1;
-
     fseek(file, 0, SEEK_END);
 
     fwrite(&tam1, sizeof(int), 1, file);

@@ -1,4 +1,9 @@
 
+/*
+NOMES: vitor turqueti / Guilherme holanda
+#USP: 10844313 / 10734370
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -83,12 +88,12 @@ void formatPrintFunc2(REGISTRO* reg){
     
     
     char* dataNascREG = getDataNascimento_Registro(reg);
-    char dataNascFormat[11];
+    char dataNascFormat[10];
 
     if (strcmp(dataNascREG,""))
     {
         strncpy(dataNascFormat,dataNascREG,10);
-        dataNascFormat[11] = '\0';
+        // dataNascFormat[11] = '\0';
     }else
     {
         // strcpy(dataNascFormat,"-");
@@ -124,7 +129,7 @@ void formatPrintFunc2(REGISTRO* reg){
 
     //Nasceu em BAGRE/PA, em 2016-01-01, um bebê de sexo MASCULINO.
 
-    printf("Nasceu em %s/%.*s, em %s, um bebê de sexo %s.\n",cidadeBebeFormat,2,estadoBebeFormat,dataNascFormat,sexoBebeFormatado);
+    printf("Nasceu em %s/%.*s, em %.*s, um bebê de sexo %s.\n",cidadeBebeFormat,2,estadoBebeFormat,10,dataNascFormat,sexoBebeFormatado);
 
 }
 

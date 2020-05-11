@@ -63,6 +63,18 @@ FILE* escreveLixo(FILE *file, int quantidade)
     return file;
 }
 
+FILE* escreveLixoEstatico(FILE *file, int quantidade)
+{
+    char lixo = '$';
+    char zero = '\0';
+    fwrite(&zero, 1, 1, file);
+    for (int i = 1; i < quantidade; i++)
+    {
+        fwrite(&lixo, 1, 1, file);
+    }
+    return file;
+}
+
 FILE* abreLeitura_Binario(char *nomeArquivo)
 {
     FILE *file;
@@ -158,19 +170,19 @@ void insere_binario(FILE *file, REGISTRO *reg)
 
     if(strlen(dataNascimento) > 0)
         fwrite(dataNascimento,10 * sizeof(char), 1, file);
-    else file = escreveLixo(file, 10);
+    else file = escreveLixoEstatico(file, 10);
 
-    if(sexoBebe != '\0')
+    //if(sexoBebe != '\0')
         fwrite(&sexoBebe, sizeof(char), 1, file);
-    else file = escreveLixo(file, 1);
+    //else file = escreveLixoEstatico(file, 1);
 
     if(strlen(estadoMae) > 0)
         fwrite(estadoMae, 2 * sizeof(char), 1, file);
-    else file = escreveLixo(file, 2);
+    else file = escreveLixoEstatico(file, 2);
 
     if(strlen(estadoBebe) > 0)
         fwrite(estadoBebe, 2 * sizeof(char), 1, file);
-    else file = escreveLixo(file, 2);
+    else file = escreveLixoEstatico(file, 2);
 
     atualizaProxReg(file);
     atualizaNReg(file);

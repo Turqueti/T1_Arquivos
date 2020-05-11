@@ -151,7 +151,12 @@ void funcionalidade2(char* binFile){
             free_Registro(regtemp);
         }
         fecha_binario(binario);
+    }else
+    {
+        printf("Falha no processamento do arquivo.\n");
     }
+    
+    
 }
 
 void menu(){

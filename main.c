@@ -103,7 +103,7 @@ void funcionalidade2(char* binFile){
 
 int main(int argc, char const *argv[])
 {
-    csvHandler("test.csv","agoravai.bin");
+    //csvHandler("test.csv","agoravai.bin");
 
     menu();
     //funcionalidade2("agoravai.bin");

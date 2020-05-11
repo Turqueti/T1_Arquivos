@@ -158,31 +158,13 @@ void funcionalidade2(char* binFile){
             free_Registro(regtemp);
         }
         fecha_binario(binario);
-
     }
-            
-
-
 }
 
 
 
 int main(int argc, char const *argv[])
 {
-    csvHandler("test.csv","agoravai.bin");
-
-    // menu();
-  
-    // REGISTRO* regTemp;
-
-    // FILE *binario;
-    // binario = abreLeitura_Binario("agoravai.bin");
-    // for (int i = 1; i < 6; i++)
-    // {
-    //     regTemp = getRegistro_Binario(binario, i);
-    //     print_Registro(regTemp);
-    // }
-
-    funcionalidade2("agoravai.bin");
+    menu();
     return 0;
 }

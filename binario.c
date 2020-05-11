@@ -96,14 +96,14 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
     if(tam1 != 0)
     {
         fread(cidMae, tam1, 1, file);
-        cidMae[tam1+1] = '\0';
+        cidMae[tam1] = '\0';
         setCidadeMae_Registro(reg, cidMae);
     }
 
     if(tam2 != 0)
     {
         fread(cidBB, tam2, 1, file);
-        cidBB[tam2+1] = '\0';
+        cidBB[tam2] = '\0';
         setCidadeBebe_Registro(reg, cidBB);
     }
     

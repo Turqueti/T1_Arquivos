@@ -86,10 +86,13 @@ void formatPrintFunc2(REGISTRO* reg){
 
     if (strcmp(dataNascREG,"$$$$$$$$$$"))
     {
-        strcpy(dataNascFormat,"-");
+        strncpy(dataNascFormat,dataNascREG,10);
+        dataNascFormat[11] = '\0';
     }else
     {
-        strcpy(dataNascFormat,dataNascREG);
+        // strcpy(dataNascFormat,"-");
+        dataNascFormat[0] = '-';
+        dataNascFormat[1] = '\0';      
     }
     
     char* estadoBebeREG = getEstadoBebe_Registro(reg);
@@ -104,11 +107,24 @@ void formatPrintFunc2(REGISTRO* reg){
     }
     
     char* cidadeBebeREG = getCidadeBebe_Registro(reg);
-    char* cidadeBebeFormat;
+    char* cidadeBebeFormat = NULL;
+
+    if (cidadeBebeREG == NULL)
+    {
+        cidadeBebeFormat = "-";
+        // strcpy(cidadeBebeFormat,"-");
+    }else
+    {
+        cidadeBebeFormat = cidadeBebeREG;
+        // strcpy(cidadeBebeFormat,cidadeBebeREG);
+    }
+    
+    
 
     //Nasceu em BAGRE/PA, em 2016-01-01, um bebê de sexo MASCULINO.
 
-    printf("Nasceu em %s/%.*s, em %.*s, um bebê de sexo %s.\n",cidadeBebeREG,2,estadoBebeFormat,10,dataNascREG,sexoBebeFormatado);
+    printf("Nasceu em %s/%.*s, em %s, um bebê de sexo %s.\n",cidadeBebeFormat,2,estadoBebeFormat,dataNascFormat,sexoBebeFormatado);
+
 }
 
 void funcionalidade2(char* binFile){

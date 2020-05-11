@@ -64,25 +64,6 @@ void parse_command(char argumentos[3][30],int numArgumentos){
 
 }
 
-
-void menu(){
-    char argumentos[3][30];
-    int numArgs = 0;
-    
-    parse_command(argumentos,numArgs);
-    if(!strcmp(argumentos[0],"0")){
-        printf("corno\n");
-    }
-    if(!strcmp(argumentos[0],"1")){
-        csvHandler(argumentos[1], argumentos[2]);
-        binarioNaTela(argumentos[2]);
-    }
-    if(!strcmp(argumentos[0],"2")){
-
-    }
-}
-
-
 void funcionalidade2(char* binFile){
     REGISTRO* regtemp;
     FILE* binario;
@@ -98,6 +79,23 @@ void funcionalidade2(char* binFile){
             regtemp = getRegistro_Binario(binario,i);
             print_Registro(regtemp);
         }
+    }
+}
+
+void menu(){
+    char argumentos[3][30];
+    int numArgs = 0;
+    
+    parse_command(argumentos,numArgs);
+    if(!strcmp(argumentos[0],"0")){
+        printf("corno\n");
+    }
+    if(!strcmp(argumentos[0],"1")){
+        csvHandler(argumentos[1], argumentos[2]);
+        binarioNaTela(argumentos[2]);
+    }
+    if(!strcmp(argumentos[0],"2")){
+        funcionalidade2(argumentos[1]);
     }
 }
 

@@ -3,7 +3,7 @@ all:
 run:
 	./programaTrab
 wall:
-	gcc *.c *.h -o programaTrab -Wall
+	gcc *.c *.h -o programaTrab -Wall -g
 debug:
 	bash ./.Tools/criaHeaderTodas.sh
 	gcc *.c *.h -o programaTrab -g -Wall;

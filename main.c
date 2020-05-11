@@ -64,24 +64,6 @@ void parse_command(char argumentos[3][30],int numArgumentos){
 
 }
 
-void funcionalidade2(char* binFile){
-    REGISTRO* regtemp;
-    FILE* binario;
-    int qntdRegistros;
-
-    binario = abreLeitura_Binario("agoravai.bin");
-    if (binario != NULL)
-    {
-        fseek(binario,5,SEEK_SET);
-        fread(&qntdRegistros,sizeof(int),1,binario);
-        for (int i = 1; i <= qntdRegistros; i++)
-        {
-            regtemp = getRegistro_Binario(binario,i);
-            print_Registro(regtemp);
-        }
-    }
-}
-
 void menu(){
     char argumentos[3][30];
     int numArgs = 0;
@@ -95,15 +77,90 @@ void menu(){
         binarioNaTela(argumentos[2]);
     }
     if(!strcmp(argumentos[0],"2")){
-        funcionalidade2(argumentos[1]);
+
+    }
+}
+
+
+
+
+void formatPrintFunc2(REGISTRO* reg){
+    char SexoBebeREG = getSexoBebe_Registro(reg);
+    char sexoBebeFormatado[10];
+
+    if (SexoBebeREG == '0')
+    {
+        strcpy(sexoBebeFormatado,"IGNORADO");
+    }else if (SexoBebeREG == '1')
+    {
+        strcpy(sexoBebeFormatado,"MASCULINO");
+    }else if (SexoBebeREG == '2')
+    {
+        strcpy(sexoBebeFormatado,"FEMININO");
+    }
+    
+    
+    
+    char* dataNascREG = getDataNascimento_Registro(reg);
+    char dataNascFormat[11];
+
+    if (strcmp(dataNascREG,"$$$$$$$$$$"))
+    {
+        strcpy(dataNascFormat,"-");
+    }else
+    {
+        strcpy(dataNascFormat,dataNascREG);
+    }
+    
+    char* estadoBebeREG = getEstadoBebe_Registro(reg);
+    char estadoBebeFormat[3];
+
+    if (!strcmp(estadoBebeREG,"$$"))
+    {
+        strcpy(estadoBebeFormat,"-");
+    }else
+    {
+        strcpy(estadoBebeFormat,estadoBebeREG);
+    }
+    
+    char* cidadeBebeREG = getCidadeBebe_Registro(reg);
+    char* cidadeBebeFormat;
+
+    //Nasceu em BAGRE/PA, em 2016-01-01, um bebê de sexo MASCULINO.
+
+    printf("Nasceu em %s/%.*s, em %.*s, um bebê de sexo %s.\n",cidadeBebeREG,2,estadoBebeFormat,10,dataNascREG,sexoBebeFormatado);
+
+
+    
+    
+    
+
+}
+
+void funcionalidade2(char* binFile){
+    REGISTRO* regtemp;
+    FILE* binario;
+    int qntdRegistros;
+
+    binario = abreLeitura_Binario(binFile);
+    if (binario != NULL)
+    {
+        fseek(binario,5,SEEK_SET);
+        fread(&qntdRegistros,sizeof(int),1,binario);
+        for (int i = 1; i <= qntdRegistros; i++)
+        {
+            regtemp = getRegistro_Binario(binario,i);
+            //
+            // print_Registro(regtemp);
+            formatPrintFunc2(regtemp);
+            free_Registro(regtemp);
+        }
+        fecha_binario(binario);
     }
 }
 
 int main(int argc, char const *argv[])
 {
-    //csvHandler("test.csv");
-
     menu();
-    //funcionalidade2("agoravai.bin");
     return 0;
 }

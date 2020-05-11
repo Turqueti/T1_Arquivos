@@ -42,7 +42,7 @@ REGISTRO* cria_Registro(){
     reg->idNascimento = -1;
     reg->idadeMae = -1;
     reg->dataNascimento[0]= '\0';
-    reg->sexoBebe = '\0';
+    reg->sexoBebe = '0';
     reg->estadoMae[0] = '\0';
     reg->estadoBebe[0] = '\0';
     reg->cidadeMae = NULL;

@@ -35,9 +35,18 @@ FILE* fecha_binario(FILE *file)
 
 void atualizaProxReg(FILE *file)
 {
+    /*
     int nUltimo = (int)ftell(file);
     fseek(file, N_PROX_REG, SEEK_SET);
     fwrite(&nUltimo, sizeof(int), 1, file);
+    return;*/
+    int nReg;
+    fseek(file, N_PROX_REG, SEEK_SET);
+
+    fread(&nReg, sizeof(int), 1, file);
+    nReg++;
+    fseek(file, N_PROX_REG, SEEK_SET);
+    fwrite(&nReg, sizeof(int), 1, file);
     return;
 }
 

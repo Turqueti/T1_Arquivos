@@ -84,7 +84,7 @@ void formatPrintFunc2(REGISTRO* reg){
     char* dataNascREG = getDataNascimento_Registro(reg);
     char dataNascFormat[11];
 
-    if (strcmp(dataNascREG,"$$$$$$$$$$"))
+    if (strcmp(dataNascREG,""))
     {
         strncpy(dataNascFormat,dataNascREG,10);
         dataNascFormat[11] = '\0';
@@ -98,7 +98,7 @@ void formatPrintFunc2(REGISTRO* reg){
     char* estadoBebeREG = getEstadoBebe_Registro(reg);
     char estadoBebeFormat[3];
 
-    if (!strcmp(estadoBebeREG,"$$"))
+    if (!strcmp(estadoBebeREG,""))
     {
         strcpy(estadoBebeFormat,"-");
     }else

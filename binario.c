@@ -188,3 +188,4 @@ void insere_binario(FILE *file, REGISTRO *reg)
     atualizaNReg(file);
     return;
 }
+

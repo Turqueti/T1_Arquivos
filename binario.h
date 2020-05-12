@@ -11,8 +11,10 @@ FILE* fecha_binario(FILE *file);
 void atualizaProxReg(FILE *file);
 void atualizaNReg(FILE *file);
 FILE* escreveLixo(FILE *file, int quantidade);
-void insere_binario(FILE *file, REGISTRO *reg);
-REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado);
+FILE* escreveLixoEstatico(FILE *file, int quantidade);
 FILE* abreLeitura_Binario(char *nomeArquivo);
+REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado);
+void insere_binario(FILE *file, REGISTRO *reg);
+int verificaIntegridade_Binario(FILE* file);
 
 #endif

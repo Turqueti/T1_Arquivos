@@ -84,10 +84,26 @@ FILE* escreveLixoEstatico(FILE *file, int quantidade)
     return file;
 }
 
+/*
+    retorna o ponteiro para file binaria para ser editado, caso incosistencia no arquivo retorna NULL
+*/
+
 FILE* abreLeitura_Binario(char *nomeArquivo)
 {
     FILE *file;
     file = fopen(nomeArquivo, "rb");
+    if (file != NULL)
+    {
+        int integridade = verificaIntegridade_Binario(file);
+        if (integridade == 0)
+        {
+            fclose(file);
+            return NULL;
+        }
+        
+    }
+    
+
     return file;
 }
 
@@ -198,3 +214,16 @@ void insere_binario(FILE *file, REGISTRO *reg)
     return;
 }
 
+/*retorna 0 ou 1 caso o arquivo esteja inconsistente ou consistente respec.
+
+    Parametros:
+    [in]FILE* file
+
+    retorno:
+    int bool_integridade
+*/
+int verificaIntegridade_Binario(FILE* file){
+    char ret;
+    fread(&ret,sizeof(char),1,file);
+    return (int)ret - '0';
+}

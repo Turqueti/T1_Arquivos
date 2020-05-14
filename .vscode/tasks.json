@@ -15,6 +15,20 @@
             "options": {
                 "cwd": "/usr/bin"
             }
+        },
+        {
+            "label": "Make wall",
+            "type": "shell",
+            "command": "make wall",
+            "group": "build",
+        },
+        {
+            "label": "autoTest 1",
+            "type": "shell",
+            "command": "./.Tools/tester.sh",
+            "group": "test",
+            "dependsOrder": "sequence",
+            "dependsOn":["Make wall"]
         }
     ],
     "version": "2.0.0"

@@ -52,7 +52,7 @@ if [ ! -x $1 ];then
     exit
 
 else
-    prog=$PWD/$1
+    prog=$1
 fi
 shift
 if [ ! -d $1 ];then
@@ -62,7 +62,7 @@ if [ ! -d $1 ];then
     exit
 
 else
-    pathToTests=$PWD/$1 #caminho para pasta dos casos de teste sendo $PWD a pasta em que o programa foi executado
+    pathToTests=$1 #caminho para pasta dos casos de teste sendo $PWD a pasta em que o programa foi executado
     numcasos=$(ls $pathToTests -l| grep "\.in"|wc -l) #numero de casos de teste
     start=1
 

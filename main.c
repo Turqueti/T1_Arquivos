@@ -165,6 +165,8 @@ void menu(){
     int numArgs = 0;
     
     parse_command(argumentos,numArgs);
+
+    
     if(!strcmp(argumentos[0],"0")){
         printf("corno\n");
     }

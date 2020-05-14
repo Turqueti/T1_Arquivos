@@ -5,6 +5,28 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "gcc test",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/out",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "builda test",
+            "miDebuggerPath": "/usr/bin/gdb"
+
+        },
+        {
             "name": "gcc-9 - Build and debug active file",
             "type": "cppdbg",
             "request": "launch",

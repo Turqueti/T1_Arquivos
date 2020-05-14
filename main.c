@@ -154,7 +154,7 @@ void funcionalidade2(char* binFile){
         fecha_binario(binario);
     }else
     {
-        printf("Falha no processamento do arquivo.\n");
+        printf("Falha no processamento do arquivo.");
     }
     
     

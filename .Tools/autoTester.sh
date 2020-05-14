@@ -63,7 +63,7 @@ if [ ! -d $1 ];then
 
 else
     pathToTests=$PWD/$1 #caminho para pasta dos casos de teste sendo $PWD a pasta em que o programa foi executado
-    numcasos=$(ls $pathToTests -l| grep .in|wc -l) #numero de casos de teste
+    numcasos=$(ls $pathToTests -l| grep "\.in"|wc -l) #numero de casos de teste
     start=1
 
 fi

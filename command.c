@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -19,7 +18,7 @@ int countArgs(char* line){
     while ((scroll = strpbrk(scroll," \n")))
     {
         i++;
-        *scroll++;
+        scroll++;
     }
     return i;
 }
@@ -71,24 +70,4 @@ char** commandIntoArgs(char* command, int* numArgs){
     
     return args;
 
-}
-
-int main(int argc, char const *argv[]){
-
-    char* command = NULL;
-    size_t size;
-    __ssize_t read;
-    read = getline(&command, &size, stdin);
-
-    int numArgs = 0;
-    char** argumentos = commandIntoArgs(command,&numArgs);
-
-    for (int i = 0; i < numArgs; i++)
-    {
-        printf("agr[%d]: %s\n",i,argumentos[i]);
-    }
-    
-    free(argumentos);
-    free(command);
-    return 0;
 }

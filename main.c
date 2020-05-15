@@ -11,6 +11,7 @@ NOMES: vitor turqueti / Guilherme holanda
 #include "csv2Reg.h"
 #include "binario.h"
 #include "binarioNaTela.h"
+#include "command.h"
 
 
 void csvHandler(char* entrada, char* saida){
@@ -52,24 +53,6 @@ void csvHandler(char* entrada, char* saida){
 
 }
 
-void parse_command(char argumentos[3][30],int numArgumentos){
-    char command[30];
-    fgets(command,90,stdin);
-    int i = 0;
-    char delim[] = " \n";
-    char* temp;
-
-
-    temp = strtok(command,delim);
-    while(temp != NULL){
-        strcpy(argumentos[i],temp);
-        temp = strtok(NULL,delim);
-        i++;
-    }
-    numArgumentos = i + 1;
-
-}
-
 void formatPrintFunc2(REGISTRO* reg){
     char SexoBebeREG = getSexoBebe_Registro(reg);
     char sexoBebeFormatado[10];
@@ -102,7 +85,7 @@ void formatPrintFunc2(REGISTRO* reg){
     }
     
     char* estadoBebeREG = getEstadoBebe_Registro(reg);
-    char estadoBebeFormat[3];
+    char estadoBebeFormat[3] = {'\0','\0','\0'};
 
     if (!strcmp(estadoBebeREG,""))
     {
@@ -161,10 +144,13 @@ void funcionalidade2(char* binFile){
 }
 
 void menu(){
-    char argumentos[3][30];
+    char* command = NULL;
+    size_t size;
+    // __ssize_t read;
+    getline(&command, &size, stdin);
+
     int numArgs = 0;
-    
-    parse_command(argumentos,numArgs);
+    char** argumentos = commandIntoArgs(command,&numArgs);
 
     
     if(!strcmp(argumentos[0],"0")){
@@ -177,6 +163,17 @@ void menu(){
     if(!strcmp(argumentos[0],"2")){
         funcionalidade2(argumentos[1]);
     }
+
+    if (command)
+    {
+        free(command);
+    }
+    if (argumentos)
+    {
+        free(argumentos);
+    }
+    
+
 }
 
 int main(int argc, char const *argv[])

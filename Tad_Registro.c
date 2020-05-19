@@ -52,6 +52,32 @@ REGISTRO* cria_Registro(){
 
 }
 
+REGISTRO* verificaSemelhanca_Registro(REGISTRO* pesquisado, REGISTRO* reg)
+{
+    if(pesquisado->idadeMae != -1)
+        if(pesquisado->idadeMae != reg->idadeMae) return NULL;
+
+    if(pesquisado->dataNascimento[0] != '\0')
+        if(strcmp(pesquisado->dataNascimento, reg->dataNascimento) != 0) return NULL;
+
+    if(pesquisado->idadeMae != reg->idadeMae) return NULL;
+
+
+    if(pesquisado->estadoBebe[0] != '\0')
+        if(strcmp(pesquisado->estadoBebe, reg->estadoBebe) != 0) return NULL;
+
+    if(pesquisado->estadoMae[0] != '\0')
+        if(strcmp(pesquisado->estadoMae, reg->estadoMae) != 0) return NULL;
+
+    if(pesquisado->cidadeMae != NULL)
+        if(strcmp(pesquisado->cidadeMae, reg->cidadeMae) != 0) return NULL;
+
+    if(pesquisado->cidadeBebe != NULL)
+        if(strcmp(pesquisado->cidadeBebe, reg->cidadeBebe) != 0) return NULL;
+
+    return reg;
+}
+
 
 /*
     Desaloca um ponteiro para Registro(reg) e todas as strings dentro dele

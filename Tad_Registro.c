@@ -54,6 +54,43 @@ REGISTRO* cria_Registro(){
 
 
 /*
+    Verifica se dois registros têm os valores validos(not dafault) iguais:
+
+    Retorno:
+    REGISTRO*: ponteiro para registro semelhante (reg atual);
+
+*/
+
+REGISTRO* verificaSemelhanca_Registro(REGISTRO* reg_pesquisa, REGISTRO* reg_atual)
+{
+    if(reg_atual == NULL) return NULL;
+    
+    if(reg_pesquisa->idadeMae != -1)
+        if(reg_pesquisa->idadeMae != reg_atual->idadeMae) return NULL;
+
+    if(reg_pesquisa->dataNascimento[0] != '\0')
+        if(strcmp(reg_pesquisa->dataNascimento, reg_atual->dataNascimento) != 0) return NULL;
+
+    if(reg_pesquisa->idadeMae != reg_atual->idadeMae) return NULL;
+
+
+    if(reg_pesquisa->estadoBebe[0] != '\0')
+        if(strcmp(reg_pesquisa->estadoBebe, reg_atual->estadoBebe) != 0) return NULL;
+
+    if(reg_pesquisa->estadoMae[0] != '\0')
+        if(strcmp(reg_pesquisa->estadoMae, reg_atual->estadoMae) != 0) return NULL;
+
+    if(reg_pesquisa->cidadeMae != NULL)
+        if(strcmp(reg_pesquisa->cidadeMae, reg_atual->cidadeMae) != 0) return NULL;
+
+    if(reg_pesquisa->cidadeBebe != NULL)
+        if(strcmp(reg_pesquisa->cidadeBebe, reg_atual->cidadeBebe) != 0) return NULL;
+
+    return reg_atual;
+}
+
+
+/*
     Desaloca um ponteiro para Registro(reg) e todas as strings dentro dele
 
     Parametros:

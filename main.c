@@ -122,7 +122,7 @@ void funcionalidade2(char* binFile){
     int qntdRegistros;
 
     binario = abreLeitura_Binario(binFile);
-    if (verificaIntegridade_Binario(binario))
+    if (verificaIntegridade_binario(binario))
     {
         fseek(binario,5,SEEK_SET);
         fread(&qntdRegistros,sizeof(int),1,binario);

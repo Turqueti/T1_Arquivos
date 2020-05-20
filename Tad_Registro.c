@@ -54,6 +54,8 @@ REGISTRO* cria_Registro(){
 
 REGISTRO* verificaSemelhanca_Registro(REGISTRO* pesquisado, REGISTRO* reg)
 {
+    if(reg == NULL) return NULL;
+    
     if(pesquisado->idadeMae != -1)
         if(pesquisado->idadeMae != reg->idadeMae) return NULL;
 

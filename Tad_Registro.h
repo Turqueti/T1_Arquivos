@@ -9,6 +9,7 @@ int getIdNascimento_Registro(REGISTRO* reg);
 int getIdadeMae_Registro(REGISTRO* reg);
 int getSexoBebe_Registro(REGISTRO* reg);
 char* getDataNascimento_Registro(REGISTRO* reg);
+REGISTRO* verificaSemelhanca_Registro(REGISTRO* pesquisado, REGISTRO* reg);
 char* getEstadoMae_Registro(REGISTRO* reg);
 char* getEstadoBebe_Registro(REGISTRO* reg);
 char* getCidadeMae_Registro(REGISTRO* reg);

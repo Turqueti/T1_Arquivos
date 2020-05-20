@@ -143,6 +143,48 @@ void funcionalidade2(char* binFile){
     
 }
 
+void funcionalidade3(char** argumentos)
+{
+    REGISTRO *reg_pesquisa, *reg_atual, *reg_imprimir;
+    FILE* binario;
+    int qntdRegistros;
+
+    binario = abreLeitura_Binario(argumentos[1]);
+    reg_pesquisa = cria_Registro();
+
+    for (int i = 1; i <= atoi(argumentos[2]); i++)
+    {
+        if(strcmp(argumentos[i+3], "idadeMae"))
+            setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+4]));
+
+        if(strcmp(argumentos[i+3], "dataNascimento"))
+            setDataNascimento_Registro(reg_pesquisa, argumentos[i+4]);
+        
+        if(strcmp(argumentos[i+3], "sexoBebe"))
+            setSexoBebe_Registro(reg_pesquisa, *argumentos[i+4]);
+
+        if(strcmp(argumentos[i+3], "estadoMae"))
+            setEstadoMae_Registro(reg_pesquisa, argumentos[i+4]);
+
+        if(strcmp(argumentos[i+3], "estadoBebe"))
+            setEstadoBebe_Registro(reg_pesquisa, argumentos[i+4]);
+        
+        if(strcmp(argumentos[i+3], "cidadeMae"))
+            setCidadeMae_Registro(reg_pesquisa, argumentos[i+4]);
+
+        if(strcmp(argumentos[i+3], "cidadeBebe"))
+            setCidadeBebe_Registro(reg_pesquisa, argumentos[i+4]);
+    }
+
+    for(int i = 1; i <= getQuantidadeRegistros_binario(binario); i++)
+    {
+        reg_atual = getRegistro_Binario(binario,i);
+
+        if(verificaSemelhanca_Registro(reg_pesquisa, reg_atual)!= NULL)
+            formatPrintFunc2(reg_atual);
+    }    
+}
+
 void menu(){
     char* command = NULL;
     size_t size;
@@ -162,6 +204,11 @@ void menu(){
     }
     if(!strcmp(argumentos[0],"2")){
         funcionalidade2(argumentos[1]);
+    }
+
+    if(!strcmp(argumentos[0],"3")){
+        
+        
     }
 
     if (command)

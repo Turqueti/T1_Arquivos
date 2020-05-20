@@ -162,6 +162,17 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
     return reg;
 }
 
+int getQuantidadeRegistros_binario(FILE *file)
+{
+    int quantidade;
+
+    fseek(file, N_REG_INSER, SEEK_SET);
+
+    fread(&quantidade, sizeof(int), 1, file);
+
+    return quantidade;
+}
+
 void insere_binario(FILE *file, REGISTRO *reg)
 {
     char zero = '\0';

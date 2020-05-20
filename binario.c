@@ -158,7 +158,7 @@ FILE* abreLeitura_Binario(char *nomeArquivo)
     file = fopen(nomeArquivo, "rb");
     if (file != NULL)
     {
-        int integridade = verificaIntegridade_Binario(file);
+        int integridade = verificaIntegridade_binario(file);
         if (integridade == 0)
         {
             fclose(file);

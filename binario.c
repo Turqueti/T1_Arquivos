@@ -47,7 +47,7 @@ FILE* cria_binario(char* nomeArquivo)
 */
 FILE* fecha_binario(FILE *file)
 {
-    if(file == NULL) return;
+    if(file == NULL) return NULL;
     
     fseek(file,0,SEEK_SET);
     fprintf(file,"%d", 1);

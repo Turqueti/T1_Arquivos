@@ -150,7 +150,7 @@ void funcionalidade3(char** argumentos)
     binario = abreLeitura_Binario(argumentos[1]);
     reg_pesquisa = cria_Registro();
 
-    if(verificaIntegridade_Binario(binario))
+    if(verificaIntegridade_binario(binario))
     {
         for (int i = 1; i <= atoi(argumentos[2]); i++)
         {

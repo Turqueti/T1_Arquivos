@@ -122,7 +122,7 @@ void funcionalidade2(char* binFile){
     int qntdRegistros;
 
     binario = abreLeitura_Binario(binFile);
-    if (binario != NULL)
+    if (verificaIntegridade_Binario(binario))
     {
         fseek(binario,5,SEEK_SET);
         fread(&qntdRegistros,sizeof(int),1,binario);
@@ -138,51 +138,65 @@ void funcionalidade2(char* binFile){
     }else
     {
         printf("Falha no processamento do arquivo.");
-    }
-    
-    
+    }   
 }
 
 void funcionalidade3(char** argumentos)
 {
-    REGISTRO *reg_pesquisa, *reg_atual, *reg_imprimir;
+    REGISTRO *reg_pesquisa, *reg_atual;
     FILE* binario;
-    int qntdRegistros;
+    int qntdRegistros, flagEncontrado = 0;
 
     binario = abreLeitura_Binario(argumentos[1]);
     reg_pesquisa = cria_Registro();
 
-    for (int i = 1; i <= atoi(argumentos[2]); i++)
+    if(verificaIntegridade_Binario(binario))
     {
-        if(strcmp(argumentos[i+3], "idadeMae"))
-            setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+4]));
+        for (int i = 1; i <= atoi(argumentos[2]); i++)
+        {
+            if(strcmp(argumentos[i+3], "idadeMae"))
+                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+4]));
 
-        if(strcmp(argumentos[i+3], "dataNascimento"))
-            setDataNascimento_Registro(reg_pesquisa, argumentos[i+4]);
-        
-        if(strcmp(argumentos[i+3], "sexoBebe"))
-            setSexoBebe_Registro(reg_pesquisa, *argumentos[i+4]);
+            if(strcmp(argumentos[i+3], "dataNascimento"))
+                setDataNascimento_Registro(reg_pesquisa, argumentos[i+4]);
+            
+            if(strcmp(argumentos[i+3], "sexoBebe"))
+                setSexoBebe_Registro(reg_pesquisa, *argumentos[i+4]);
 
-        if(strcmp(argumentos[i+3], "estadoMae"))
-            setEstadoMae_Registro(reg_pesquisa, argumentos[i+4]);
+            if(strcmp(argumentos[i+3], "estadoMae"))
+                setEstadoMae_Registro(reg_pesquisa, argumentos[i+4]);
 
-        if(strcmp(argumentos[i+3], "estadoBebe"))
-            setEstadoBebe_Registro(reg_pesquisa, argumentos[i+4]);
-        
-        if(strcmp(argumentos[i+3], "cidadeMae"))
-            setCidadeMae_Registro(reg_pesquisa, argumentos[i+4]);
+            if(strcmp(argumentos[i+3], "estadoBebe"))
+                setEstadoBebe_Registro(reg_pesquisa, argumentos[i+4]);
+            
+            if(strcmp(argumentos[i+3], "cidadeMae"))
+                setCidadeMae_Registro(reg_pesquisa, argumentos[i+4]);
 
-        if(strcmp(argumentos[i+3], "cidadeBebe"))
-            setCidadeBebe_Registro(reg_pesquisa, argumentos[i+4]);
+            if(strcmp(argumentos[i+3], "cidadeBebe"))
+                setCidadeBebe_Registro(reg_pesquisa, argumentos[i+4]);
+        }
+
+        for(int i = 1; i <= getQuantidadeRegistros_binario(binario); i++)
+        {
+            reg_atual = getRegistro_Binario(binario,i);
+
+            if(verificaSemelhanca_Registro(reg_pesquisa, reg_atual)!= NULL)
+            {
+                formatPrintFunc2(reg_atual);
+                flagEncontrado = 1;
+            }
+        }
+
+        if(!flagEncontrado) printf("Registro inexistente.");
+
+        fecha_binario(binario);
+        free_Registro(reg_atual);
+        free_Registro(reg_pesquisa);
     }
-
-    for(int i = 1; i <= getQuantidadeRegistros_binario(binario); i++)
+    else
     {
-        reg_atual = getRegistro_Binario(binario,i);
-
-        if(verificaSemelhanca_Registro(reg_pesquisa, reg_atual)!= NULL)
-            formatPrintFunc2(reg_atual);
-    }    
+        printf("Falha no processamento do arquivo.");
+    }
 }
 
 void menu(){
@@ -207,8 +221,7 @@ void menu(){
     }
 
     if(!strcmp(argumentos[0],"3")){
-        
-        
+        funcionalidade3(argumentos);
     }
 
     if (command)
@@ -219,8 +232,6 @@ void menu(){
     {
         free(argumentos);
     }
-    
-
 }
 
 int main(int argc, char const *argv[])

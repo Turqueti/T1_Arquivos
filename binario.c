@@ -6,11 +6,22 @@
 
 #include "binario.h"
 
+/*
+    Cria um arquivo binario, o abre pare leitura e escrita e o inicializa com um
+    cabeçalho.
+
+    Parametros:
+    [in] char* nomeArquivo
+
+    Retorno:
+    FILE*: ponteiro para o inicio do arquivo binario
+    NULL: se algo der errado.
+*/
 FILE* cria_binario(char* nomeArquivo)
 {
     int zero = 0;
     char lixo = '$';
-    FILE *file;
+    FILE *file = NULL;
     file = fopen(nomeArquivo, "wb+");
 
     for (int i = 0; i < 17; i++)
@@ -22,24 +33,38 @@ FILE* cria_binario(char* nomeArquivo)
     {
         fwrite(&lixo,1,1,file);
     } 
-   return file;    
+    return file;    
 }
 
+/*
+    Fecha um arquivo binario e ativa a integridade de seus dados
+
+    Parametros:
+    [in] FILE *file
+
+    Retorno:
+    NULL
+*/
 FILE* fecha_binario(FILE *file)
 {
+    if(file == NULL) return;
+    
     fseek(file,0,SEEK_SET);
     fprintf(file,"%d", 1);
     fclose(file);
     return NULL;
 }
 
+/*
+    Atualiza o RNN do aquivo quando um registro é inserido
+
+    Parametros:
+    [in] FILE* file
+*/
 void atualizaProxReg(FILE *file)
 {
-    /*
-    int nUltimo = (int)ftell(file);
-    fseek(file, N_PROX_REG, SEEK_SET);
-    fwrite(&nUltimo, sizeof(int), 1, file);
-    return;*/
+    if(file == NULL) return;
+
     int nReg;
     fseek(file, N_PROX_REG, SEEK_SET);
 
@@ -50,8 +75,15 @@ void atualizaProxReg(FILE *file)
     return;
 }
 
+/*
+    Atualiza o cabeçalho com o numero de registros contidos no arquivo
+
+    Parametros:
+    [in] FILE* file
+*/
 void atualizaNReg(FILE *file)
 {
+    if(file == NULL) return;
     int nReg;
     fseek(file, N_REG_INSER, SEEK_SET);
 
@@ -62,8 +94,21 @@ void atualizaNReg(FILE *file)
     return;
 }
 
+/*
+    Escreve uma quatidade de '$' em sequencia em algum ponto do arquivo
+
+    Parametros:
+    [in] FILE* file
+    [in] int quantidade
+
+    Retorno:
+    FILE*: ponteiro para a continação do arquivo apos a sequencia de '$'
+    NULL: se arquivo for nulo.
+*/
 FILE* escreveLixo(FILE *file, int quantidade)
 {
+    if(file == NULL) return NULL;
+
     char lixo = '$';
     for (int i = 0; i < quantidade; i++)
     {
@@ -72,8 +117,21 @@ FILE* escreveLixo(FILE *file, int quantidade)
     return file;
 }
 
+/*
+    Escreve um '\0' e uma quatidade de '$' em sequencia em algum ponto do arquivo
+
+    Parametros:
+    [in] FILE* file
+    [in] int quantidade
+
+    Retorno:
+    FILE*: ponteiro para a continação do arquivo apos a sequencia de '$'
+    NULL: se o arquivo for nulo
+*/
 FILE* escreveLixoEstatico(FILE *file, int quantidade)
 {
+    if(file == NULL) return NULL;
+
     char lixo = '$';
     char zero = '\0';
     fwrite(&zero, 1, 1, file);
@@ -85,9 +143,15 @@ FILE* escreveLixoEstatico(FILE *file, int quantidade)
 }
 
 /*
-    retorna o ponteiro para file binaria para ser editado, caso incosistencia no arquivo retorna NULL
-*/
+    Abre um arquivo binario ja existente apenas para leitura.
 
+    Parametros:
+    [in] char* nomeArquivo
+
+    Retorno:
+    FILE*: ponteiro para o inicio do arquivo binario
+    NULL: se o arquivo estiver corrompido
+*/
 FILE* abreLeitura_Binario(char *nomeArquivo)
 {
     FILE *file;
@@ -102,11 +166,21 @@ FILE* abreLeitura_Binario(char *nomeArquivo)
         }
         
     }
-    
-
     return file;
 }
 
+/*
+    Recupera um certo registro já inserido no arquivo binario atraves do seu
+    idNascimento e retorna suas informacoes atraves da estrutura REGISTRO
+
+    Parametros:
+    [in] FILE* file
+    [in] ID_Desejado
+
+    Retorno:
+    REGISTRO*: ponteiro para o registro se ele for encontrado
+    NULL: se o resgistro não for encontrado
+*/
 REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
 {
     fseek(file, 0, SEEK_END);
@@ -162,8 +236,20 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
     return reg;
 }
 
+/*
+    Recupera a quantidade de registro inseridos no arquivo binario
+
+    Parametros:
+    [in] FILE* file
+
+    Retorno:
+    int: [0 ate __INT8_MAX__] numero de registros inseridos
+    int: -1 se o arquivo for nulo.
+*/
 int getQuantidadeRegistros_binario(FILE *file)
 {
+    if(file == NULL) return -1;
+
     int quantidade;
 
     fseek(file, N_REG_INSER, SEEK_SET);
@@ -173,8 +259,18 @@ int getQuantidadeRegistros_binario(FILE *file)
     return quantidade;
 }
 
+/*
+    Insere os dados de um REGISTRO* na ultima posicao do arquivo binario
+    e atualiza o cabecalho do arquivo com as inforacoes necessarias
+
+    Parametros:
+    [in] FILE* file
+    [in] REGISTRO* reg
+*/
 void insere_binario(FILE *file, REGISTRO *reg)
 {
+    if(file == NULL) return;
+    if(!verificaIntegridade_binario(file)) return;
     char zero = '\0';
     int idNascimento = getIdNascimento_Registro(reg);
     int idadeMae = getIdadeMae_Registro(reg);
@@ -208,9 +304,8 @@ void insere_binario(FILE *file, REGISTRO *reg)
         fwrite(dataNascimento,10 * sizeof(char), 1, file);
     else file = escreveLixoEstatico(file, 10);
 
-    //if(sexoBebe != '\0')
-        fwrite(&sexoBebe, sizeof(char), 1, file);
-    //else file = escreveLixoEstatico(file, 1);
+    
+    fwrite(&sexoBebe, sizeof(char), 1, file);
 
     if(strlen(estadoMae) > 0)
         fwrite(estadoMae, 2 * sizeof(char), 1, file);
@@ -225,15 +320,17 @@ void insere_binario(FILE *file, REGISTRO *reg)
     return;
 }
 
-/*retorna 0 ou 1 caso o arquivo esteja inconsistente ou consistente respec.
+/*
+    erifica a integridade de um arquivo binario atraves do seu primeiro byte
 
     Parametros:
-    [in]FILE* file
+    [in] FILE* file
 
-    retorno:
-    int bool_integridade
+    Retorno:
+    int: 0 se os dados não forem integros
+    int: 1 se os dados forem integros.
 */
-int verificaIntegridade_Binario(FILE* file){
+int verificaIntegridade_binario(FILE* file){
     char ret;
     fread(&ret,sizeof(char),1,file);
     return (int)ret - '0';

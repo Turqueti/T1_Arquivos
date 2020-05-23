@@ -53,6 +53,33 @@ void csvHandler(char* entrada, char* saida){
 
 }
 
+void completaRegistro_Pesquisa(char** argumentos, REGISTRO* reg_pesquisa)
+{
+    for (int i = 1; i <= atoi(argumentos[2]); i++)
+        {
+            if(strcmp(argumentos[i+3], "idadeMae"))
+                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+4]));
+
+            if(strcmp(argumentos[i+3], "dataNascimento"))
+                setDataNascimento_Registro(reg_pesquisa, argumentos[i+4]);
+            
+            if(strcmp(argumentos[i+3], "sexoBebe"))
+                setSexoBebe_Registro(reg_pesquisa, *argumentos[i+4]);
+
+            if(strcmp(argumentos[i+3], "estadoMae"))
+                setEstadoMae_Registro(reg_pesquisa, argumentos[i+4]);
+
+            if(strcmp(argumentos[i+3], "estadoBebe"))
+                setEstadoBebe_Registro(reg_pesquisa, argumentos[i+4]);
+            
+            if(strcmp(argumentos[i+3], "cidadeMae"))
+                setCidadeMae_Registro(reg_pesquisa, argumentos[i+4]);
+
+            if(strcmp(argumentos[i+3], "cidadeBebe"))
+                setCidadeBebe_Registro(reg_pesquisa, argumentos[i+4]);
+        }
+}
+
 void formatPrintFunc2(REGISTRO* reg){
     char SexoBebeREG = getSexoBebe_Registro(reg);
     char sexoBebeFormatado[10];
@@ -153,29 +180,7 @@ void funcionalidade3(char** argumentos)
 
     if(verificaIntegridade_binario(binario))
     {
-        for (int i = 1; i <= atoi(argumentos[2]); i++)
-        {
-            if(strcmp(argumentos[i+3], "idadeMae"))
-                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+4]));
-
-            if(strcmp(argumentos[i+3], "dataNascimento"))
-                setDataNascimento_Registro(reg_pesquisa, argumentos[i+4]);
-            
-            if(strcmp(argumentos[i+3], "sexoBebe"))
-                setSexoBebe_Registro(reg_pesquisa, *argumentos[i+4]);
-
-            if(strcmp(argumentos[i+3], "estadoMae"))
-                setEstadoMae_Registro(reg_pesquisa, argumentos[i+4]);
-
-            if(strcmp(argumentos[i+3], "estadoBebe"))
-                setEstadoBebe_Registro(reg_pesquisa, argumentos[i+4]);
-            
-            if(strcmp(argumentos[i+3], "cidadeMae"))
-                setCidadeMae_Registro(reg_pesquisa, argumentos[i+4]);
-
-            if(strcmp(argumentos[i+3], "cidadeBebe"))
-                setCidadeBebe_Registro(reg_pesquisa, argumentos[i+4]);
-        }
+        completaRegistro_Pesquisa(argumentos, reg_pesquisa);
 
         for(int i = 1; i <= getQuantidadeRegistros_binario(binario); i++)
         {
@@ -215,6 +220,9 @@ void funcionalidade4(char* binFile, int RNN)
             formatPrintFunc2(reg);
         else 
             printf("Falha no processamento do arquivo.");
+
+        fecha_binario(file);
+        free_Registro(reg);
     }
     else
     {
@@ -223,6 +231,42 @@ void funcionalidade4(char* binFile, int RNN)
     return;
 }
 
+void funcionalidade5(char** argumentos)
+{
+    REGISTRO *reg_pesquisa, *reg_atual;
+    FILE* binario;
+    int qntdRegistros, flagEncontrado = 0;
+
+    binario = abreLeitura_Binario(argumentos[1]);
+    reg_pesquisa = cria_Registro();
+
+    if(verificaIntegridade_binario(binario))
+    {
+        completaRegistro_Pesquisa(argumentos, reg_pesquisa);
+
+        for(int i = 1; i <= getQuantidadeRegistros_binario(binario); i++)
+        {
+            reg_atual = getRegistro_Binario(binario,i);
+
+            if(verificaSemelhanca_Registro(reg_pesquisa, reg_atual)!= NULL)
+            {
+                excluiRegistro_binario(binario, i);
+                flagEncontrado = 1;
+            }
+        }
+
+        binarioNaTela(argumentos[1]);
+        
+        fecha_binario(binario);
+        free_Registro(reg_atual);
+        free_Registro(reg_pesquisa);
+    }
+    else
+    {
+        printf("Falha no processamento do arquivo.");
+    }
+    return;   
+}
 void menu(){
     char* command = NULL;
     size_t size;
@@ -234,7 +278,6 @@ void menu(){
 
     
     if(!strcmp(argumentos[0],"0")){
-        printf("corno\n");
     }
     if(!strcmp(argumentos[0],"1")){
         csvHandler(argumentos[1], argumentos[2]);

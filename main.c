@@ -1,6 +1,6 @@
 
 /*
-NOMES: vitor turqueti / Guilherme holanda
+NOMES: vitor turqueti / Guilherme Holanda Sanches
 #USP: 10844313 / 10734370
 */
 
@@ -113,7 +113,7 @@ void formatPrintFunc2(REGISTRO* reg){
     //Nasceu em BAGRE/PA, em 2016-01-01, um bebê de sexo MASCULINO.
 
     printf("Nasceu em %s/%.*s, em %.*s, um bebê de sexo %s.\n",cidadeBebeFormat,2,estadoBebeFormat,10,dataNascFormat,sexoBebeFormatado);
-
+    return;
 }
 
 void funcionalidade2(char* binFile){
@@ -138,7 +138,8 @@ void funcionalidade2(char* binFile){
     }else
     {
         printf("Falha no processamento do arquivo.");
-    }   
+    }
+    return;
 }
 
 void funcionalidade3(char** argumentos)
@@ -197,6 +198,29 @@ void funcionalidade3(char** argumentos)
     {
         printf("Falha no processamento do arquivo.");
     }
+    return;
+}
+
+void funcionalidade4(char* binFile, int RNN)
+{
+    FILE* file;
+    REGISTRO* reg;
+    file = abreLeitura_Binario(binFile);
+
+    if(verificaIntegridade_binario(file))
+    {
+        reg = getRegistro_Binario(file, RNN);
+
+        if(reg != NULL)
+            formatPrintFunc2(reg);
+        else 
+            printf("Falha no processamento do arquivo.");
+    }
+    else
+    {
+        printf("Falha no processamento do arquivo.");
+    }
+    return;
 }
 
 void menu(){
@@ -222,6 +246,10 @@ void menu(){
 
     if(!strcmp(argumentos[0],"3")){
         funcionalidade3(argumentos);
+    }
+
+    if(!strcmp(argumentos[0],"4")){
+        funcionalidade4(argumentos[1], atoi(argumentos[2]));
     }
 
     if (command)

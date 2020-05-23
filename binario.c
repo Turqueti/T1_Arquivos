@@ -330,7 +330,9 @@ void insere_binario(FILE *file, REGISTRO *reg)
     int: 0 se os dados não forem integros
     int: 1 se os dados forem integros.
 */
-int verificaIntegridade_binario(FILE* file){
+int verificaIntegridade_binario(FILE* file)
+{
+    if(file == NULL) return 0;
     char ret;
     fread(&ret,sizeof(char),1,file);
     return (int)ret - '0';

@@ -237,7 +237,7 @@ void funcionalidade5(char** argumentos)
     FILE* binario;
     int qntdRegistros, flagEncontrado = 0;
 
-    binario = abreLeitura_Binario(argumentos[1]);
+    binario = abreEscrita_Binario(argumentos[1]);
     reg_pesquisa = cria_Registro();
 
     if(verificaIntegridade_binario(binario))
@@ -256,7 +256,7 @@ void funcionalidade5(char** argumentos)
         }
 
         binarioNaTela(argumentos[1]);
-        
+
         fecha_binario(binario);
         free_Registro(reg_atual);
         free_Registro(reg_pesquisa);
@@ -267,6 +267,7 @@ void funcionalidade5(char** argumentos)
     }
     return;   
 }
+
 void menu(){
     char* command = NULL;
     size_t size;

@@ -13,6 +13,7 @@ void atualizaNReg(FILE *file);
 FILE* escreveLixo(FILE *file, int quantidade);
 FILE* escreveLixoEstatico(FILE *file, int quantidade);
 FILE* abreLeitura_Binario(char *nomeArquivo);
+FILE* abreEscrita_Binario(char *nomeArquivo);
 REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado);
 int excluiRegistro_binario(FILE* file, int RRN);
 int getQuantidadeRegistros_binario(FILE *file);

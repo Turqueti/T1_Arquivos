@@ -170,6 +170,32 @@ FILE* abreLeitura_Binario(char *nomeArquivo)
 }
 
 /*
+    Abre um arquivo binario ja existente para leitura e escrita.
+
+    Parametros:
+    [in] char* nomeArquivo
+
+    Retorno:
+    FILE*: ponteiro para o inicio do arquivo binario
+    NULL: se o arquivo estiver corrompido
+*/
+FILE* abreEscrita_Binario(char *nomeArquivo)
+{
+    FILE *file;
+    file = fopen(nomeArquivo, "rb+");
+    if (file != NULL)
+    {
+        int integridade = verificaIntegridade_binario(file);
+        if (integridade == 0)
+        {
+            fclose(file);
+            return NULL;
+        }
+        
+    }
+    return file;
+}
+/*
     Recupera um certo registro já inserido no arquivo binario atraves do seu
     idNascimento e retorna suas informacoes atraves da estrutura REGISTRO
 

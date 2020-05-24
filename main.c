@@ -144,8 +144,9 @@ void funcionalidade2(char* binFile){
 
 void funcionalidade3(char** argumentos)
 {
-    REGISTRO *reg_pesquisa, *reg_atual;
-    FILE* binario;
+    REGISTRO *reg_pesquisa = NULL;
+    REGISTRO *reg_atual = NULL;
+    FILE* binario = NULL;
     int qntdRegistros, flagEncontrado = 0;
 
     binario = abreLeitura_Binario(argumentos[1]);
@@ -155,25 +156,25 @@ void funcionalidade3(char** argumentos)
     {
         for (int i = 1; i <= atoi(argumentos[2]); i++)
         {
-            if(strcmp(argumentos[i+3], "idadeMae"))
+            if(strcmp(argumentos[i+2], "idadeMae"))
                 setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+4]));
 
-            if(strcmp(argumentos[i+3], "dataNascimento"))
+            if(strcmp(argumentos[i+2], "dataNascimento"))
                 setDataNascimento_Registro(reg_pesquisa, argumentos[i+4]);
             
-            if(strcmp(argumentos[i+3], "sexoBebe"))
+            if(strcmp(argumentos[i+2], "sexoBebe"))
                 setSexoBebe_Registro(reg_pesquisa, *argumentos[i+4]);
 
-            if(strcmp(argumentos[i+3], "estadoMae"))
+            if(strcmp(argumentos[i+2], "estadoMae"))
                 setEstadoMae_Registro(reg_pesquisa, argumentos[i+4]);
 
-            if(strcmp(argumentos[i+3], "estadoBebe"))
+            if(strcmp(argumentos[i+2], "estadoBebe"))
                 setEstadoBebe_Registro(reg_pesquisa, argumentos[i+4]);
             
-            if(strcmp(argumentos[i+3], "cidadeMae"))
+            if(strcmp(argumentos[i+2], "cidadeMae"))
                 setCidadeMae_Registro(reg_pesquisa, argumentos[i+4]);
 
-            if(strcmp(argumentos[i+3], "cidadeBebe"))
+            if(strcmp(argumentos[i+2], "cidadeBebe"))
                 setCidadeBebe_Registro(reg_pesquisa, argumentos[i+4]);
         }
 
@@ -188,11 +189,15 @@ void funcionalidade3(char** argumentos)
             }
         }
 
-        if(!flagEncontrado) printf("Registro inexistente.");
+        if(!flagEncontrado) printf("Registro Inexistente.");
 
-        fecha_binario(binario);
-        free_Registro(reg_atual);
-        free_Registro(reg_pesquisa);
+
+        if (binario)
+            fecha_binario(binario);
+        if (reg_atual)
+            free_Registro(reg_atual);
+        if (reg_pesquisa)
+            free_Registro(reg_pesquisa);        
     }
     else
     {
@@ -214,7 +219,7 @@ void funcionalidade4(char* binFile, int RNN)
         if(reg != NULL)
             formatPrintFunc2(reg);
         else 
-            printf("Falha no processamento do arquivo.");
+            printf("Registro Inexistente.");
     }
     else
     {

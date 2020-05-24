@@ -56,7 +56,7 @@ FILE* fecha_binario(FILE *file)
 }
 
 /*
-    Atualiza o RNN do aquivo quando um registro é inserido
+    Atualiza o RRN do aquivo quando um registro é inserido
 
     Parametros:
     [in] FILE* file
@@ -170,21 +170,47 @@ FILE* abreLeitura_Binario(char *nomeArquivo)
 }
 
 /*
+    Abre um arquivo binario ja existente para leitura e escrita.
+
+    Parametros:
+    [in] char* nomeArquivo
+
+    Retorno:
+    FILE*: ponteiro para o inicio do arquivo binario
+    NULL: se o arquivo estiver corrompido
+*/
+FILE* abreEscrita_Binario(char *nomeArquivo)
+{
+    FILE *file;
+    file = fopen(nomeArquivo, "rb+");
+    if (file != NULL)
+    {
+        int integridade = verificaIntegridade_binario(file);
+        if (integridade == 0)
+        {
+            fclose(file);
+            return NULL;
+        }
+        
+    }
+    return file;
+}
+/*
     Recupera um certo registro já inserido no arquivo binario atraves do seu
     idNascimento e retorna suas informacoes atraves da estrutura REGISTRO
 
     Parametros:
     [in] FILE* file
-    [in] ID_Desejado
+    [in] RRN
 
     Retorno:
     REGISTRO*: ponteiro para o registro se ele for encontrado
     NULL: se o resgistro não for encontrado
 */
-REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
+REGISTRO* getRegistro_Binario(FILE *file, int RRN)
 {
     fseek(file, 0, SEEK_END);
-    if(ftell(file) < 128 + (ID_Desejado * 128)) return NULL;
+    if(ftell(file) < 128 + (RRN * 128)) return NULL;
 
     int tam1, tam2;
     int idNascimento;
@@ -195,7 +221,7 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
     char estadoBebe[2];
     char cidMae[101], cidBB[101];
 
-    fseek(file, 128 + ((ID_Desejado - 1) * 128), SEEK_SET);
+    fseek(file, 128 + ((RRN - 1) * 128), SEEK_SET);
 
     fread(&tam1, sizeof(int), 1,  file);
     if(tam1 == -1)return NULL;
@@ -234,6 +260,29 @@ REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado)
     setEstadoMae_Registro(reg, estadoMae);
     setEstadoBebe_Registro(reg, estadoBebe);
     return reg;
+}
+
+/*
+    Exclui logicamente um registro a partir do seu RRN
+    Parametros:
+    [in] FILE* file
+    [in] int RRN
+
+    Retorno:
+    int: 0 Se der errado (RRN não existir)
+    int: 1 se a exlusão acontecer
+*/
+int excluiRegistro_binario(FILE* file, int RRN)
+{
+    fseek(file, 0, SEEK_END);
+    if(ftell(file) < 128 + (RRN * 128)) return 0;
+
+    int setter = -1;
+
+    fseek(file, 128 + ((RRN - 1) * 128), SEEK_SET);
+
+    fwrite(&setter, sizeof(int), 1,  file);
+    return 1;    
 }
 
 /*

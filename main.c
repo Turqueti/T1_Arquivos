@@ -80,6 +80,33 @@ void completaRegistro_Pesquisa(char** argumentos, REGISTRO* reg_pesquisa)
         }
 }
 
+void completaRegistro_Remocao(char** argumentos, REGISTRO* reg_pesquisa)
+{
+    for (int i = 1; i <= 2 * atoi(argumentos[0]); i+= 2)
+        {
+            if(strcmp(argumentos[i], "idadeMae"))
+                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+1]));
+
+            if(strcmp(argumentos[i], "dataNascimento"))
+                setDataNascimento_Registro(reg_pesquisa, argumentos[i+1]);
+            
+            if(strcmp(argumentos[i], "sexoBebe"))
+                setSexoBebe_Registro(reg_pesquisa, *argumentos[i+1]);
+
+            if(strcmp(argumentos[i], "estadoMae"))
+                setEstadoMae_Registro(reg_pesquisa, argumentos[i+1]);
+
+            if(strcmp(argumentos[i], "estadoBebe"))
+                setEstadoBebe_Registro(reg_pesquisa, argumentos[i+1]);
+            
+            if(strcmp(argumentos[i], "cidadeMae"))
+                setCidadeMae_Registro(reg_pesquisa, argumentos[i+1]);
+
+            if(strcmp(argumentos[i], "cidadeBebe"))
+                setCidadeBebe_Registro(reg_pesquisa, argumentos[i+1]);
+        }
+}
+
 void formatPrintFunc2(REGISTRO* reg){
     char SexoBebeREG = getSexoBebe_Registro(reg);
     char sexoBebeFormatado[10];
@@ -231,35 +258,54 @@ void funcionalidade4(char* binFile, int RNN)
     return;
 }
 
-void funcionalidade5(char** argumentos)
+char** lineToArgs_5()
+{
+    char* linha = NULL;
+    size_t size;
+    // __ssize_t read;
+    getline(&linha, &size, stdin);
+
+    int numArgs = 0;
+    char** argumentos = commandIntoArgs(linha,&numArgs);
+
+    free(linha);
+     return argumentos;
+}
+
+void funcionalidade5(char* nomeArq,int nRemocoes)
 {
     REGISTRO *reg_pesquisa, *reg_atual;
     FILE* binario;
-    int qntdRegistros, flagEncontrado = 0;
 
-    binario = abreEscrita_Binario(argumentos[1]);
-    reg_pesquisa = cria_Registro();
+    binario = abreEscrita_Binario(nomeArq);
 
     if(verificaIntegridade_binario(binario))
     {
-        completaRegistro_Pesquisa(argumentos, reg_pesquisa);
-
-        for(int i = 1; i <= getQuantidadeRegistros_binario(binario); i++)
+        for (int i = 0; i < nRemocoes; i++)
         {
-            reg_atual = getRegistro_Binario(binario,i);
+            reg_pesquisa = cria_Registro();
 
-            if(verificaSemelhanca_Registro(reg_pesquisa, reg_atual)!= NULL)
+            char** argumentos = lineToArgs_5(); //desalocar depois
+
+            completaRegistro_Remocao(argumentos, reg_pesquisa);
+
+            for(int i = 1; i <= getQuantidadeRegistros_binario(binario); i++)
             {
-                excluiRegistro_binario(binario, i);
-                flagEncontrado = 1;
+                reg_atual = getRegistro_Binario(binario,i);
+
+                if(verificaSemelhanca_Registro(reg_pesquisa, reg_atual)!= NULL)
+                {
+                    excluiRegistro_binario(binario, i);
+                }
+                free_Registro(reg_atual);
             }
+
+            free_Registro(reg_pesquisa);
+            free(argumentos);
         }
 
-        binarioNaTela(argumentos[1]);
-
+        binarioNaTela(nomeArq);
         fecha_binario(binario);
-        free_Registro(reg_atual);
-        free_Registro(reg_pesquisa);
     }
     else
     {
@@ -294,6 +340,10 @@ void menu(){
 
     if(!strcmp(argumentos[0],"4")){
         funcionalidade4(argumentos[1], atoi(argumentos[2]));
+    }
+
+    if(!strcmp(argumentos[0],"5")){
+        funcionalidade5(argumentos[1], atoi(argumentos[2]));
     }
 
     if (command)

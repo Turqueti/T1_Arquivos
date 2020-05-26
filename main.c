@@ -200,8 +200,9 @@ void funcionalidade2(char* binFile){
 
 void funcionalidade3(char** argumentos)
 {
-    REGISTRO *reg_pesquisa, *reg_atual;
-    FILE* binario;
+    REGISTRO *reg_pesquisa = NULL;
+    REGISTRO *reg_atual = NULL;
+    FILE* binario = NULL;
     int qntdRegistros, flagEncontrado = 0;
 
     binario = abreLeitura_Binario(argumentos[1]);
@@ -209,7 +210,31 @@ void funcionalidade3(char** argumentos)
 
     if(verificaIntegridade_binario(binario))
     {
-        completaRegistro_Pesquisa(argumentos, reg_pesquisa);
+
+        for (int i = 3; i <= atoi(argumentos[2]); i=i+2)
+        {
+            // printf("argumentos[%d]: %s\n",i,argumentos[i]);
+            if(strcmp(argumentos[i], "idadeMae"))
+                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+1]));
+            
+            else if(strcmp(argumentos[i], "dataNascimento"))
+                setDataNascimento_Registro(reg_pesquisa, argumentos[i+1]);
+            
+            else if(strcmp(argumentos[i], "sexoBebe"))
+                setSexoBebe_Registro(reg_pesquisa, *argumentos[i+1]);
+
+            else if(strcmp(argumentos[i], "estadoMae"))
+                setEstadoMae_Registro(reg_pesquisa, argumentos[i+1]);
+
+            else if(strcmp(argumentos[i], "estadoBebe"))
+                setEstadoBebe_Registro(reg_pesquisa, argumentos[i+1]);
+            
+            else if(strcmp(argumentos[i], "cidadeMae"))
+                setCidadeMae_Registro(reg_pesquisa, argumentos[i+1]);
+
+            else if(strcmp(argumentos[i], "cidadeBebe"))
+                setCidadeBebe_Registro(reg_pesquisa, argumentos[i+1]);
+        }
 
         for(int i = 1; i <= getQuantidadeRegistros_binario(binario); i++)
         {
@@ -222,11 +247,15 @@ void funcionalidade3(char** argumentos)
             }
         }
 
-        if(!flagEncontrado) printf("Registro inexistente.");
+        if(!flagEncontrado) printf("Registro Inexistente.");
 
-        fecha_binario(binario);
-        free_Registro(reg_atual);
-        free_Registro(reg_pesquisa);
+
+        if (binario)
+            fecha_binario(binario);
+        if (reg_atual)
+            free_Registro(reg_atual);
+        if (reg_pesquisa)
+            free_Registro(reg_pesquisa);        
     }
     else
     {

@@ -1,0 +1,4 @@
+7 binario03.bin 3
+36 2 estadoMae "SP" estadoBebe "SP"
+520 2 cidadeBebe "ITAPEVA" dataNascimento "2017-04-08"
+1059 1 idadeMae NULO

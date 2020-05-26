@@ -154,28 +154,30 @@ void funcionalidade3(char** argumentos)
 
     if(verificaIntegridade_binario(binario))
     {
-        for (int i = 1; i <= atoi(argumentos[2]); i++)
+
+        for (int i = 3; i <= atoi(argumentos[2]); i=i+2)
         {
-            if(strcmp(argumentos[i+2], "idadeMae"))
-                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+4]));
-
-            if(strcmp(argumentos[i+2], "dataNascimento"))
-                setDataNascimento_Registro(reg_pesquisa, argumentos[i+4]);
+            // printf("argumentos[%d]: %s\n",i,argumentos[i]);
+            if(strcmp(argumentos[i], "idadeMae"))
+                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+1]));
             
-            if(strcmp(argumentos[i+2], "sexoBebe"))
-                setSexoBebe_Registro(reg_pesquisa, *argumentos[i+4]);
-
-            if(strcmp(argumentos[i+2], "estadoMae"))
-                setEstadoMae_Registro(reg_pesquisa, argumentos[i+4]);
-
-            if(strcmp(argumentos[i+2], "estadoBebe"))
-                setEstadoBebe_Registro(reg_pesquisa, argumentos[i+4]);
+            else if(strcmp(argumentos[i], "dataNascimento"))
+                setDataNascimento_Registro(reg_pesquisa, argumentos[i+1]);
             
-            if(strcmp(argumentos[i+2], "cidadeMae"))
-                setCidadeMae_Registro(reg_pesquisa, argumentos[i+4]);
+            else if(strcmp(argumentos[i], "sexoBebe"))
+                setSexoBebe_Registro(reg_pesquisa, *argumentos[i+1]);
 
-            if(strcmp(argumentos[i+2], "cidadeBebe"))
-                setCidadeBebe_Registro(reg_pesquisa, argumentos[i+4]);
+            else if(strcmp(argumentos[i], "estadoMae"))
+                setEstadoMae_Registro(reg_pesquisa, argumentos[i+1]);
+
+            else if(strcmp(argumentos[i], "estadoBebe"))
+                setEstadoBebe_Registro(reg_pesquisa, argumentos[i+1]);
+            
+            else if(strcmp(argumentos[i], "cidadeMae"))
+                setCidadeMae_Registro(reg_pesquisa, argumentos[i+1]);
+
+            else if(strcmp(argumentos[i], "cidadeBebe"))
+                setCidadeBebe_Registro(reg_pesquisa, argumentos[i+1]);
         }
 
         for(int i = 1; i <= getQuantidadeRegistros_binario(binario); i++)

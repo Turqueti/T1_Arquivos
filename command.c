@@ -13,12 +13,22 @@
 */
 int countArgs(char* line){
     int i = 0;
+    // char* temp = line;
     char* scroll = line;
+    char delim[] = " \n";
 
-    while ((scroll = strpbrk(scroll," \n")))
+    while ((scroll = strpbrk(scroll,delim)))
     {
         i++;
         scroll++;
+        if (*scroll == '"')
+        {
+            scroll++;
+            scroll = strpbrk(scroll,"\"");
+            i++;
+            scroll = scroll + 2;
+        }
+   
     }
     return i;
 }
@@ -54,20 +64,32 @@ char** commandIntoArgs(char* command, int* numArgs){
         return NULL;
     }
     
-
-
     char delim[] = " \n";
-    char* temp;
-
-
+    char* temp = command;
+    char* scroll;
     int i = 0; 
-    temp = strtok(command,delim);
-    while(temp != NULL){
+
+    while ((scroll = strpbrk(temp,delim)))
+    {
+        *scroll = 0;
         args[i] = temp;
-        temp = strtok(NULL,delim);
         i++;
+        temp = ++scroll;
+
+        
+        if (*scroll == '"')
+        {
+            scroll++;
+            temp = scroll;
+            scroll = strpbrk(temp,"\"");
+            *scroll = 0;
+            args[i] = temp;
+            i++;
+            temp = scroll+2;
+        }
     }
-    
+
+
     return args;
 
 }

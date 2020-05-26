@@ -13,4 +13,6 @@ exec:
 	bash ./.tools/criaheaderdeTodasAsFiles.sh
 	gcc *.c *.h -o programaTrab -g -Wall;
 	./programaTrab < 1.in;
-	
+
+test:
+	gcc test.c command.c command.h -o out -g

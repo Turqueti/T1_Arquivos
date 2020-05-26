@@ -10,7 +10,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/out",
-            "args": [],
+            "args": ["<","7.in"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -23,7 +23,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "builda test",
+            "preLaunchTask": "make test",
             "miDebuggerPath": "/usr/bin/gdb"
 
         },

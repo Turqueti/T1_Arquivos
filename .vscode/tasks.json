@@ -29,6 +29,12 @@
             "group": "test",
             "dependsOrder": "sequence",
             "dependsOn":["Make wall"]
+        },
+        {
+            "label": "make test",
+            "type": "shell",
+            "command": "make test",
+            "group": "build",
         }
     ],
     "version": "2.0.0"

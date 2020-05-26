@@ -80,10 +80,14 @@ REGISTRO* verificaSemelhanca_Registro(REGISTRO* reg_pesquisa, REGISTRO* reg_atua
     if(reg_pesquisa->estadoMae[0] != '\0')
         if(strcmp(reg_pesquisa->estadoMae, reg_atual->estadoMae) != 0) return NULL;
 
-    if(reg_pesquisa->cidadeMae != NULL)
+    if(reg_pesquisa->cidadeMae != NULL && reg_atual->cidadeMae == NULL) return NULL;
+
+    if(reg_pesquisa->cidadeMae != NULL && reg_atual->cidadeMae != NULL)//verificar
         if(strcmp(reg_pesquisa->cidadeMae, reg_atual->cidadeMae) != 0) return NULL;
 
-    if(reg_pesquisa->cidadeBebe != NULL)
+    if(reg_pesquisa->cidadeBebe != NULL && reg_atual->cidadeBebe == NULL) return NULL;
+
+    if(reg_pesquisa->cidadeBebe != NULL && reg_atual->cidadeBebe != NULL)
         if(strcmp(reg_pesquisa->cidadeBebe, reg_atual->cidadeBebe) != 0) return NULL;
 
     return reg_atual;

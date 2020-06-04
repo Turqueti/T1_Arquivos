@@ -16,3 +16,8 @@ exec:
 
 test:
 	gcc test.c command.c command.h -o out -g
+
+search:
+	gcc *.c *.h -o programaTrab -Wall -g
+	./programaTrab < test_criaBin.in
+	./programaTrab < test_search.in

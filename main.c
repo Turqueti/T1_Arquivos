@@ -55,30 +55,28 @@ void csvHandler(char* entrada, char* saida){
 
 void completaRegistro_Pesquisa(char** argumentos, REGISTRO* reg_pesquisa)
 {
-    char* teste = argumentos[3];
-    printf("\n argumentos: %s", argumentos[2]);
-    for (int i = 1; i <= atoi(argumentos[2]); i++)
+    for (int i = 0; i <= atoi(argumentos[2]); i = i + 2)
         {
-            if(strcmp(argumentos[i+2], "idadeMae") == 0)
-                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+3]));
+            if(strcmp(argumentos[3+i], "idadeMae") == 0)
+                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[4+i]));
 
-            if(strcmp(argumentos[i+2], "dataNascimento") == 0)
-                setDataNascimento_Registro(reg_pesquisa, argumentos[i+3]);
+            else if(strcmp(argumentos[3+i], "dataNascimento") == 0)
+                setDataNascimento_Registro(reg_pesquisa, argumentos[4+i]);
             
-            if(strcmp(argumentos[i+2], "sexoBebe") == 0)
-                setSexoBebe_Registro(reg_pesquisa, *argumentos[i+3]);
+            else if(strcmp(argumentos[3+i], "sexoBebe") == 0)
+                setSexoBebe_Registro(reg_pesquisa, *argumentos[4+i]);
 
-            if(strcmp(argumentos[i+2], "estadoMae") == 0)
-                setEstadoMae_Registro(reg_pesquisa, argumentos[i+3]);
+            else if(strcmp(argumentos[3+i], "estadoMae") == 0)
+                setEstadoMae_Registro(reg_pesquisa, argumentos[4+i]);
 
-            if(strcmp(argumentos[i+2], "estadoBebe") == 0)
-                setEstadoBebe_Registro(reg_pesquisa, argumentos[i+3]);
+            else if(strcmp(argumentos[3+i], "estadoBebe") == 0)
+                setEstadoBebe_Registro(reg_pesquisa, argumentos[4+i]);
             
-            if(strcmp(argumentos[i+2], "cidadeMae") == 0)
-                setCidadeMae_Registro(reg_pesquisa, argumentos[i+3]);
+            else if(strcmp(argumentos[3+i], "cidadeMae") == 0)
+                setCidadeMae_Registro(reg_pesquisa, argumentos[4+i]);
 
-            if(strcmp(argumentos[i+2], "cidadeBebe") == 0)
-                setCidadeBebe_Registro(reg_pesquisa, argumentos[i+3]);
+            else if(strcmp(argumentos[3+i], "cidadeBebe") == 0)
+                setCidadeBebe_Registro(reg_pesquisa, argumentos[4+i]);
         }
 }
 
@@ -203,7 +201,7 @@ void funcionalidade3(char** argumentos)
     REGISTRO *reg_pesquisa = NULL;
     REGISTRO *reg_atual = NULL;
     FILE* binario = NULL;
-    int qntdRegistros, flagEncontrado = 0;
+    int flagEncontrado = 0;
 
     binario = abreLeitura_Binario(argumentos[1]);
     reg_pesquisa = cria_Registro();
@@ -211,31 +209,7 @@ void funcionalidade3(char** argumentos)
     if(verificaIntegridade_binario(binario))
     {
 
-        for (int i = 3; i <= atoi(argumentos[2]); i=i+2)
-        {
-            setSexoBebe_Registro(reg_pesquisa, '\0'); //setado para modo de pesquisa
-            // printf("argumentos[%d]: %s\n",i,argumentos[i]);
-            if(strcmp(argumentos[i], "idadeMae"))
-                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+1]));
-            
-            else if(strcmp(argumentos[i], "dataNascimento"))
-                setDataNascimento_Registro(reg_pesquisa, argumentos[i+1]);
-            
-            else if(strcmp(argumentos[i], "sexoBebe"))
-                setSexoBebe_Registro(reg_pesquisa, *argumentos[i+1]);
-
-            else if(strcmp(argumentos[i], "estadoMae"))
-                setEstadoMae_Registro(reg_pesquisa, argumentos[i+1]);
-
-            else if(strcmp(argumentos[i], "estadoBebe"))
-                setEstadoBebe_Registro(reg_pesquisa, argumentos[i+1]);
-            
-            else if(strcmp(argumentos[i], "cidadeMae"))
-                setCidadeMae_Registro(reg_pesquisa, argumentos[i+1]);
-
-            else if(strcmp(argumentos[i], "cidadeBebe"))
-                setCidadeBebe_Registro(reg_pesquisa, argumentos[i+1]);
-        }
+        completaRegistro_Pesquisa(argumentos,reg_pesquisa);
 
         for(int i = 1; i <= getQuantidadeRegistros_binario(binario); i++)
         {
@@ -278,7 +252,7 @@ void funcionalidade4(char* binFile, int RNN)
         if(reg != NULL)
             formatPrintFunc2(reg);
         else 
-            printf("Registro inexistente.");
+            printf("Registro Inexistente.");
 
         fecha_binario(file);
         free_Registro(reg);

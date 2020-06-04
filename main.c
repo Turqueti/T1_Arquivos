@@ -213,6 +213,7 @@ void funcionalidade3(char** argumentos)
 
         for (int i = 3; i <= atoi(argumentos[2]); i=i+2)
         {
+            setSexoBebe_Registro(reg_pesquisa, '\0'); //setado para modo de pesquisa
             // printf("argumentos[%d]: %s\n",i,argumentos[i]);
             if(strcmp(argumentos[i], "idadeMae"))
                 setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+1]));

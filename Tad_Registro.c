@@ -71,7 +71,7 @@ REGISTRO* verificaSemelhanca_Registro(REGISTRO* reg_pesquisa, REGISTRO* reg_atua
     if(reg_pesquisa->dataNascimento[0] != '\0')
         if(strcmp(reg_pesquisa->dataNascimento, reg_atual->dataNascimento) != 0) return NULL;
 
-    if(reg_pesquisa->sexoBebe != '0')
+    if(reg_pesquisa->sexoBebe != '\0')
         if(reg_pesquisa->sexoBebe != reg_atual->sexoBebe) return NULL;
 
     if(reg_pesquisa->estadoBebe[0] != '\0')

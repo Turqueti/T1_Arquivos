@@ -155,7 +155,7 @@ void formatPrintFunc2(REGISTRO* reg){
         strcpy(estadoBebeFormat,"-");
     }else
     {
-        strcpy(estadoBebeFormat,estadoBebeREG);
+        strncpy(estadoBebeFormat,estadoBebeREG,2);
     }
     
     char* cidadeBebeREG = getCidadeBebe_Registro(reg);
@@ -231,7 +231,7 @@ void funcionalidade3(char** argumentos)
             }
 
             if (reg_atual)
-                    free_Registro(reg_atual);
+                free_Registro(reg_atual);
         }
 
         if(!flagEncontrado) printf("Registro Inexistente.");       

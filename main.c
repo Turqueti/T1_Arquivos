@@ -146,7 +146,8 @@ void formatPrintFunc2(REGISTRO* reg){
         dataNascFormat[1] = '\0';      
     }
     
-    char* estadoBebeREG = getEstadoBebe_Registro(reg);
+    char* estadoBebeREG = "\0";
+    estadoBebeREG = getEstadoBebe_Registro(reg);
     char estadoBebeFormat[3] = {'\0','\0','\0'};
 
     if (!strcmp(estadoBebeREG,""))
@@ -228,22 +229,23 @@ void funcionalidade3(char** argumentos)
                 formatPrintFunc2(reg_atual);
                 flagEncontrado = 1;
             }
+
+            if (reg_atual)
+                    free_Registro(reg_atual);
         }
 
-        if(!flagEncontrado) printf("Registro Inexistente.");
-
-
-        if (binario)
-            fecha_binario(binario);
-        if (reg_atual)
-            free_Registro(reg_atual);
-        if (reg_pesquisa)
-            free_Registro(reg_pesquisa);        
+        if(!flagEncontrado) printf("Registro Inexistente.");       
     }
     else
     {
         printf("Falha no processamento do arquivo.");
     }
+
+    if (binario)
+        fecha_binario(binario);
+    
+    if (reg_pesquisa)
+        free_Registro(reg_pesquisa); 
     return;
 }
 
@@ -255,7 +257,7 @@ void funcionalidade4(char* binFile, int RNN)
 
     if(verificaIntegridade_binario(file))
     {
-        reg = getRegistro_Binario(file, RNN);
+        reg = getRegistro_Binario(file, (RNN+1) );
 
         if(reg != NULL)
             formatPrintFunc2(reg);

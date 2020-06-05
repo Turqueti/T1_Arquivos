@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pastaDoTrab=/home/turqueti/Documents/Facul/2020.1/arquivos/trabalhos/T1
+pastaDoTrab=/home/turqueti/Documents/2020.1/facul/arquivos/T1_Arquivos
 pathToProg=$pastaDoTrab/programaTrab
 pastaCasosDeTeste=$pastaDoTrab/.Materiais/t2/Casos_test
 

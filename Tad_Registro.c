@@ -71,6 +71,8 @@ REGISTRO* verificaSemelhanca_Registro(REGISTRO* reg_pesquisa, REGISTRO* reg_atua
     if(reg_pesquisa->dataNascimento[0] != '\0')
         if(strncmp(reg_pesquisa->dataNascimento, reg_atual->dataNascimento,10) != 0) return NULL;
 
+    if (reg_pesquisa->sexoBebe != 'S')
+        if (reg_pesquisa->sexoBebe != reg_atual->sexoBebe) return NULL;   
 
     if(reg_pesquisa->estadoBebe[0] != '\0')
         if(strncmp(reg_pesquisa->estadoBebe, reg_atual->estadoBebe,2) != 0) return NULL;
@@ -87,11 +89,6 @@ REGISTRO* verificaSemelhanca_Registro(REGISTRO* reg_pesquisa, REGISTRO* reg_atua
 
     if(reg_pesquisa->cidadeBebe != NULL && reg_atual->cidadeBebe != NULL)
         if(strcmp(reg_pesquisa->cidadeBebe, reg_atual->cidadeBebe) != 0) return NULL;
-
-    
-    // if (reg_pesquisa->sexoBebe != reg_atual->sexoBebe) return NULL;
-    if (reg_pesquisa->sexoBebe != '0')
-        if (reg_pesquisa->sexoBebe != reg_atual->sexoBebe) return NULL;     
 
     return reg_atual;
 }

@@ -55,7 +55,8 @@ void csvHandler(char* entrada, char* saida){
 
 void completaRegistro_Pesquisa(char** argumentos, REGISTRO* reg_pesquisa)
 {
-    for (int i = 0; i <= atoi(argumentos[2]); i = i + 2)
+    setSexoBebe_Registro(reg_pesquisa, 'S');
+    for (int i = 0; i < (2 * atoi(argumentos[2])) - 1; i = i+2)
         {
             if(strcmp(argumentos[3+i], "idadeMae") == 0)
                 setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[4+i]));
@@ -78,6 +79,13 @@ void completaRegistro_Pesquisa(char** argumentos, REGISTRO* reg_pesquisa)
             else if(strcmp(argumentos[3+i], "cidadeBebe") == 0)
                 setCidadeBebe_Registro(reg_pesquisa, argumentos[4+i]);
         }
+
+        /*for (int i = 0; i < 3 + atoi(argumentos[2]) * 2; i++)
+        {
+            printf("%s ",argumentos[i]);
+        }
+        
+        print_Registro(reg_pesquisa);*/
 }
 
 void completaRegistro_Remocao(char** argumentos, REGISTRO* reg_pesquisa)

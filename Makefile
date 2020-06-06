@@ -21,3 +21,7 @@ search:
 	gcc *.c *.h -o programaTrab -Wall -g
 	./programaTrab < test_criaBin.in
 	./programaTrab < test_search.in
+
+criaBin:
+	gcc *.c *.h -o programaTrab -Wall -g
+	./programaTrab < test_criaBin.in

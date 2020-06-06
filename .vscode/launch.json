@@ -10,7 +10,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/out",
-            "args": ["<","7.in"],
+            "args": ["<","test_search.in"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -28,11 +28,11 @@
 
         },
         {
-            "name": "gcc-9 - Build and debug active file",
+            "name": "build e debug progtrab",
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/programaTrab",
-            "args": ["<","7.in"],
+            "args": ["<","test_search.in"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -45,7 +45,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Make wall",
+            "preLaunchTask": "Make criaBin",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]

@@ -35,7 +35,15 @@
             "type": "shell",
             "command": "make test",
             "group": "build",
+        },
+        {
+            "label": "make bin",
+            "type": "shell",
+            "command": "make criaBin",
+            "group": "build",
         }
+        
+
     ],
     "version": "2.0.0"
 }

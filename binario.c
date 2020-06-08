@@ -80,16 +80,31 @@ void atualizaProxReg(FILE *file)
 
     Parametros:
     [in] FILE* file
+    [in] char opt  - '1' Insercao; '2' remocao
 */
-void atualizaNReg(FILE *file)
+void atualizaNReg(FILE *file, char opt)
 {
     if(file == NULL) return;
     int nReg;
     fseek(file, N_REG_INSER, SEEK_SET);
 
     fread(&nReg, sizeof(int), 1, file);
-    nReg++;
+    if(opt == '1')nReg++;
+    else nReg--;
     fseek(file, N_REG_INSER, SEEK_SET);
+    fwrite(&nReg, sizeof(int), 1, file);
+    return;
+}
+
+void atualizaRemovidos(FILE *file)
+{
+    if(file == NULL) return;
+    int nReg;
+    fseek(file, N_REG_REMOV, SEEK_SET);
+
+    fread(&nReg, sizeof(int), 1, file);
+    nReg++;
+    fseek(file, N_REG_REMOV, SEEK_SET);
     fwrite(&nReg, sizeof(int), 1, file);
     return;
 }
@@ -285,6 +300,8 @@ int excluiRegistro_binario(FILE* file, int RRN)
     fseek(file, 128 + ((RRN - 1) * 128), SEEK_SET);
 
     fwrite(&setter, sizeof(int), 1,  file);
+    atualizaRemovidos(file);
+    atualizaNReg(file, '2');
     return 1;    
 }
 
@@ -305,6 +322,19 @@ int getQuantidadeRegistros_binario(FILE *file)
     int quantidade;
 
     fseek(file, N_REG_INSER, SEEK_SET);
+
+    fread(&quantidade, sizeof(int), 1, file);
+
+    return quantidade;
+}
+
+int getQuantidadeRegistrosTotal_binario(FILE *file)
+{
+    if(file == NULL) return -1;
+
+    int quantidade;
+
+    fseek(file, N_PROX_REG, SEEK_SET);
 
     fread(&quantidade, sizeof(int), 1, file);
 
@@ -368,7 +398,7 @@ void insere_binario(FILE *file, REGISTRO *reg)
     else file = escreveLixoEstatico(file, 2);
 
     atualizaProxReg(file);
-    atualizaNReg(file);
+    atualizaNReg(file, '1');
     return;
 }
 

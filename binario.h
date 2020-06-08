@@ -9,15 +9,17 @@
 FILE* cria_binario(char* nomeArquivo);
 FILE* fecha_binario(FILE *file);
 void atualizaProxReg(FILE *file);
-void atualizaNReg(FILE *file);
+void atualizaNReg(FILE *file, char opt);
+void atualizaRemovidos(FILE *file);
 FILE* escreveLixo(FILE *file, int quantidade);
 FILE* escreveLixoEstatico(FILE *file, int quantidade);
 FILE* abreLeitura_Binario(char *nomeArquivo);
 FILE* abreEscrita_Binario(char *nomeArquivo);
-REGISTRO* getRegistro_Binario(FILE *file, int ID_Desejado);
+REGISTRO* getRegistro_Binario(FILE *file, int RRN);
 int excluiRegistro_binario(FILE* file, int RRN);
 int getQuantidadeRegistros_binario(FILE *file);
-int verificaIntegridade_binario(FILE *file);
+int getQuantidadeRegistrosTotal_binario(FILE *file);
 void insere_binario(FILE *file, REGISTRO *reg);
+int verificaIntegridade_binario(FILE* file);
 
 #endif

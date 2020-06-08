@@ -56,28 +56,28 @@ void csvHandler(char* entrada, char* saida){
 void completaRegistro_Pesquisa(char** argumentos, REGISTRO* reg_pesquisa)
 {
     setSexoBebe_Registro(reg_pesquisa, 'S');
-    for (int i = 0; i < (2 * atoi(argumentos[2])) - 1; i = i+2)
+    for (int i = 1; i < (2 * atoi(argumentos[0])); i = i+2)
         {
-            if(strcmp(argumentos[3+i], "idadeMae") == 0)
-                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[4+i]));
+            if(strcmp(argumentos[i], "idadeMae") == 0)
+                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+1]));
 
-            else if(strcmp(argumentos[3+i], "dataNascimento") == 0)
-                setDataNascimento_Registro(reg_pesquisa, argumentos[4+i]);
+            else if(strcmp(argumentos[i], "dataNascimento") == 0)
+                setDataNascimento_Registro(reg_pesquisa, argumentos[i+1]);
             
-            else if(strcmp(argumentos[3+i], "sexoBebe") == 0)
-                setSexoBebe_Registro(reg_pesquisa, *argumentos[4+i]);
+            else if(strcmp(argumentos[i], "sexoBebe") == 0)
+                setSexoBebe_Registro(reg_pesquisa, *argumentos[i+1]);
 
-            else if(strcmp(argumentos[3+i], "estadoMae") == 0)
-                setEstadoMae_Registro(reg_pesquisa, argumentos[4+i]);
+            else if(strcmp(argumentos[i], "estadoMae") == 0)
+                setEstadoMae_Registro(reg_pesquisa, argumentos[i+1]);
 
-            else if(strcmp(argumentos[3+i], "estadoBebe") == 0)
-                setEstadoBebe_Registro(reg_pesquisa, argumentos[4+i]);
+            else if(strcmp(argumentos[i], "estadoBebe") == 0)
+                setEstadoBebe_Registro(reg_pesquisa, argumentos[i+1]);
             
-            else if(strcmp(argumentos[3+i], "cidadeMae") == 0)
-                setCidadeMae_Registro(reg_pesquisa, argumentos[4+i]);
+            else if(strcmp(argumentos[i], "cidadeMae") == 0)
+                setCidadeMae_Registro(reg_pesquisa, argumentos[i+1]);
 
-            else if(strcmp(argumentos[3+i], "cidadeBebe") == 0)
-                setCidadeBebe_Registro(reg_pesquisa, argumentos[4+i]);
+            else if(strcmp(argumentos[i], "cidadeBebe") == 0)
+                setCidadeBebe_Registro(reg_pesquisa, argumentos[i+1]);
         }
 
         /*for (int i = 0; i < 3 + atoi(argumentos[2]) * 2; i++)
@@ -218,9 +218,10 @@ void funcionalidade3(char** argumentos)
     if(verificaIntegridade_binario(binario))
     {
 
+        argumentos = argumentos + 2;
         completaRegistro_Pesquisa(argumentos,reg_pesquisa);
 
-        for(int i = 1; i <= getQuantidadeRegistros_binario(binario); i++)
+        for(int i = 1; i <= getQuantidadeRegistrosTotal_binario(binario); i++)
         {
             reg_atual = getRegistro_Binario(binario,i);
 
@@ -292,13 +293,11 @@ void funcionalidade5(char* nomeArq,int nRemocoes)
             getline(&linha, &size, stdin);
             int numArgs = 0;
 
-
-
             char** argumentos = commandIntoArgs(linha,&numArgs); //desalocar depois
 
-            completaRegistro_Remocao(argumentos, reg_pesquisa);
+            completaRegistro_Pesquisa(argumentos, reg_pesquisa);
 
-            for(int i = 1; i <= getQuantidadeRegistros_binario(binario); i++)
+            for(int i = 1; i <= getQuantidadeRegistrosTotal_binario(binario); i++)
             {
                 reg_atual = getRegistro_Binario(binario,i);
 
@@ -314,8 +313,9 @@ void funcionalidade5(char* nomeArq,int nRemocoes)
             free(linha);
         }
 
-        binarioNaTela(nomeArq);
+        
         fecha_binario(binario);
+        binarioNaTela(nomeArq);
     }
     else
     {

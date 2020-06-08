@@ -17,6 +17,7 @@ else
     fi
 
     if mv  $pathToProg  $pastaCasosDeTeste ; then
+        cp $pastaDoTrab/.Binarios/* $pastaCasosDeTeste
         $pastaDoTrab/.Tools/autoTester.sh $pastaCasosDeTeste/programaTrab $pastaCasosDeTeste -c
     fi
 

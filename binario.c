@@ -50,7 +50,7 @@ FILE* fecha_binario(FILE *file)
     if(file == NULL) return NULL;
     
     fseek(file,0,SEEK_SET);
-    fprintf(file,"%d", 1);
+    fprintf(file,"%c", '1');
     fclose(file);
     return NULL;
 }
@@ -193,7 +193,7 @@ FILE* abreEscrita_Binario(char *nomeArquivo)
         }
 
         fseek(file,0,SEEK_SET); // Escreve a inconstancia
-        fprintf(file,"%d", 0);
+        fprintf(file,"%c", '0');
         
     }
     return file;

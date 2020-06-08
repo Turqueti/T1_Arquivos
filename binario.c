@@ -191,6 +191,9 @@ FILE* abreEscrita_Binario(char *nomeArquivo)
             fclose(file);
             return NULL;
         }
+
+        fseek(file,0,SEEK_SET);
+        fprintf(file,"%d", 0);
         
     }
     return file;

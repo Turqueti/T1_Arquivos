@@ -32,7 +32,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/programaTrab",
-            "args": ["<","test_search.in"],
+            "args": ["<","test_remove.in"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -45,7 +45,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "Make criaBin",
+            "preLaunchTask": "make bin",
             "miDebuggerPath": "/usr/bin/gdb"
         }
     ]

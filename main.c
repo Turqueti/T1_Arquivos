@@ -274,20 +274,6 @@ void funcionalidade4(char* binFile, int RNN)
     return;
 }
 
-char** lineToArgs_5()
-{
-    char* linha = NULL;
-    size_t size;
-    // __ssize_t read;
-    getline(&linha, &size, stdin);
-
-    int numArgs = 0;
-    char** argumentos = commandIntoArgs(linha,&numArgs);
-
-    free(linha);
-     return argumentos;
-}
-
 void funcionalidade5(char* nomeArq,int nRemocoes)
 {
     REGISTRO *reg_pesquisa, *reg_atual;
@@ -295,13 +281,20 @@ void funcionalidade5(char* nomeArq,int nRemocoes)
 
     binario = abreEscrita_Binario(nomeArq);
 
-    if(verificaIntegridade_binario(binario))
+    if(binario != NULL)
     {
         for (int i = 0; i < nRemocoes; i++)
         {
             reg_pesquisa = cria_Registro();
 
-            char** argumentos = lineToArgs_5(); //desalocar depois
+            char* linha = NULL;
+            size_t size;
+            getline(&linha, &size, stdin);
+            int numArgs = 0;
+
+
+
+            char** argumentos = commandIntoArgs(linha,&numArgs); //desalocar depois
 
             completaRegistro_Remocao(argumentos, reg_pesquisa);
 
@@ -318,6 +311,7 @@ void funcionalidade5(char* nomeArq,int nRemocoes)
 
             free_Registro(reg_pesquisa);
             free(argumentos);
+            free(linha);
         }
 
         binarioNaTela(nomeArq);

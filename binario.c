@@ -192,7 +192,7 @@ FILE* abreEscrita_Binario(char *nomeArquivo)
             return NULL;
         }
 
-        fseek(file,0,SEEK_SET);
+        fseek(file,0,SEEK_SET); // Escreve a inconstancia
         fprintf(file,"%d", 0);
         
     }
@@ -386,6 +386,8 @@ int verificaIntegridade_binario(FILE* file)
 {
     if(file == NULL) return 0;
     char ret;
+
+    fseek(file, 0, SEEK_SET);
     fread(&ret,sizeof(char),1,file);
     return (int)ret - '0';
 }

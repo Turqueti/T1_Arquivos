@@ -81,6 +81,43 @@ void completaRegistro_Pesquisa(char** argumentos, REGISTRO* reg_pesquisa)
         }
 }
 
+void completaRegistro_Insercao(char** argumentos, REGISTRO* reg){
+    if (strcmp(argumentos[0], "NULO"))
+    {
+        setCidadeMae_Registro(reg,argumentos[0]);
+    }
+    if (strcmp(argumentos[1], "NULO"))
+    {
+        setCidadeBebe_Registro(reg,argumentos[1]);
+    }
+    if (strcmp(argumentos[2], "NULO"))
+    {
+        setIdNascimento_Registro(reg,atoi(argumentos[2]));
+    }
+    if (strcmp(argumentos[3], "NULO"))
+    {
+        setIdadeMae_Registro(reg,atoi(argumentos[3]));
+    }
+    if (strcmp(argumentos[4], "NULO"))
+    {
+        setDataNascimento_Registro(reg,argumentos[4]);
+    }
+    if (strcmp(argumentos[5], "NULO"))
+    {
+        setSexoBebe_Registro(reg,argumentos[5][0]);
+    }
+    if (strcmp(argumentos[6], "NULO"))
+    {
+        setEstadoMae_Registro(reg,argumentos[6]);
+    }
+    if (strcmp(argumentos[7], "NULO"))
+    {
+        setEstadoBebe_Registro(reg,argumentos[7]);
+    }
+   
+    
+}
+
 void formatPrint(REGISTRO* reg){
     char SexoBebeREG = getSexoBebe_Registro(reg);
     char sexoBebeFormatado[10];
@@ -290,6 +327,45 @@ void funcionalidade5(char* nomeArq,int nRemocoes)
     return;   
 }
 
+void funcionalidade6(char* nomeArq,int nInsercoes){
+    REGISTRO *reg;
+    FILE* binario;
+
+    binario = abreEscrita_Binario(nomeArq);
+
+    if(binario != NULL)
+    {
+        for (int i = 0; i < nInsercoes; i++)
+        {
+            reg = cria_Registro();
+
+            char* linha = NULL;
+            size_t size;
+            getline(&linha, &size, stdin);
+            int numArgs = 0;
+
+            char** argumentos = commandIntoArgs(linha,&numArgs); //desalocar depois
+
+            completaRegistro_Insercao(argumentos, reg);
+            insere_binario(binario,reg);
+            
+            free_Registro(reg);
+            free(argumentos);
+            free(linha);
+        }
+
+        
+        fecha_binario(binario);
+        binarioNaTela(nomeArq);
+    }
+    else
+    {
+        printf("Falha no processamento do arquivo.");
+    }
+    return; 
+    
+}
+
 void menu(){
     char* command = NULL;
     size_t size;
@@ -321,6 +397,12 @@ void menu(){
     if(!strcmp(argumentos[0],"5")){
         funcionalidade5(argumentos[1], atoi(argumentos[2]));
     }
+    
+    if(!strcmp(argumentos[0],"6")){
+        funcionalidade6(argumentos[1], atoi(argumentos[2]));
+    }
+
+
 
     if (command)
     {

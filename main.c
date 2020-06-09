@@ -79,43 +79,9 @@ void completaRegistro_Pesquisa(char** argumentos, REGISTRO* reg_pesquisa)
             else if(strcmp(argumentos[i], "cidadeBebe") == 0)
                 setCidadeBebe_Registro(reg_pesquisa, argumentos[i+1]);
         }
-
-        /*for (int i = 0; i < 3 + atoi(argumentos[2]) * 2; i++)
-        {
-            printf("%s ",argumentos[i]);
-        }
-        
-        print_Registro(reg_pesquisa);*/
 }
 
-void completaRegistro_Remocao(char** argumentos, REGISTRO* reg_pesquisa)
-{
-    for (int i = 1; i <= 2 * atoi(argumentos[0]); i+= 2)
-        {
-            if(strcmp(argumentos[i], "idadeMae") == 0)
-                setIdadeMae_Registro(reg_pesquisa, atoi(argumentos[i+1]));
-
-            if(strcmp(argumentos[i], "dataNascimento") == 0)
-                setDataNascimento_Registro(reg_pesquisa, argumentos[i+1]);
-            
-            if(strcmp(argumentos[i], "sexoBebe") == 0)
-                setSexoBebe_Registro(reg_pesquisa, *argumentos[i+1]);
-
-            if(strcmp(argumentos[i], "estadoMae") == 0)
-                setEstadoMae_Registro(reg_pesquisa, argumentos[i+1]);
-
-            if(strcmp(argumentos[i], "estadoBebe") == 0)
-                setEstadoBebe_Registro(reg_pesquisa, argumentos[i+1]);
-            
-            if(strcmp(argumentos[i], "cidadeMae") == 0)
-                setCidadeMae_Registro(reg_pesquisa, argumentos[i+1]);
-
-            if(strcmp(argumentos[i], "cidadeBebe") == 0)
-                setCidadeBebe_Registro(reg_pesquisa, argumentos[i+1]);
-        }
-}
-
-void formatPrintFunc2(REGISTRO* reg){
+void formatPrint(REGISTRO* reg){
     char SexoBebeREG = getSexoBebe_Registro(reg);
     char sexoBebeFormatado[10];
 
@@ -194,7 +160,7 @@ void funcionalidade2(char* binFile){
             regtemp = getRegistro_Binario(binario,i);
             //
             // print_Registro(regtemp);
-            formatPrintFunc2(regtemp);
+            formatPrint(regtemp);
             free_Registro(regtemp);
         }
         fecha_binario(binario);
@@ -227,7 +193,7 @@ void funcionalidade3(char** argumentos)
 
             if(verificaSemelhanca_Registro(reg_pesquisa, reg_atual)!= NULL)
             {
-                formatPrintFunc2(reg_atual);
+                formatPrint(reg_atual);
                 flagEncontrado = 1;
             }
 
@@ -261,7 +227,7 @@ void funcionalidade4(char* binFile, int RNN)
         reg = getRegistro_Binario(file, (RNN+1) );
 
         if(reg != NULL)
-            formatPrintFunc2(reg);
+            formatPrint(reg);
         else 
             printf("Registro Inexistente.");
 

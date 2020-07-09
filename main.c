@@ -81,6 +81,35 @@ void completaRegistro_Pesquisa(char** argumentos, REGISTRO* reg_pesquisa)
         }
 }
 
+void completaRegistro_Atualizacao(char** argumentos, REGISTRO* reg_pesquisa)
+{
+    setIdNascimento_Registro(reg_pesquisa, atoi(argumentos[0]));
+    for (int i = 2; i <= (2 * atoi(argumentos[1])); i = i+2)
+        {
+            
+            if(strcmp(argumentos[i], "idadeMae") == 0)
+                setIdadeMae_Registro(reg_pesquisa, strcmp(argumentos[i+1], "NULO") ? -1 : atoi(argumentos[i+1]));
+
+            else if(strcmp(argumentos[i], "dataNascimento") == 0)
+                setDataNascimento_Registro(reg_pesquisa, argumentos[i+1]);
+            
+            else if(strcmp(argumentos[i], "sexoBebe") == 0)
+                setSexoBebe_Registro(reg_pesquisa, strcmp(argumentos[i+1], "NULO") ? '0': *argumentos[i+1]);
+
+            else if(strcmp(argumentos[i], "estadoMae") == 0)
+                setEstadoMae_Registro(reg_pesquisa, argumentos[i+1]);
+
+            else if(strcmp(argumentos[i], "estadoBebe") == 0)
+                setEstadoBebe_Registro(reg_pesquisa, argumentos[i+1]);
+            
+            else if(strcmp(argumentos[i], "cidadeMae") == 0)
+                setCidadeMae_Registro(reg_pesquisa, argumentos[i+1]);
+
+            else if(strcmp(argumentos[i], "cidadeBebe") == 0)
+                setCidadeBebe_Registro(reg_pesquisa, argumentos[i+1]);
+        }
+}
+
 void completaRegistro_Insercao(char** argumentos, REGISTRO* reg){
     if (strcmp(argumentos[0], "NULO"))
     {
@@ -364,6 +393,48 @@ void funcionalidade6(char* nomeArq,int nInsercoes){
     }
     return; 
     
+}
+
+
+
+void funcionalidade7(char* nomeArq,int nAtualizacoes)
+{
+    REGISTRO *reg;
+    FILE* binario;
+
+    binario = abreEscrita_Binario(nomeArq);
+
+    if(binario != NULL)
+    {
+        for (int i = 0; i < nAtualizacoes; i++)
+        {
+            char* linha = NULL;
+            size_t size;
+            getline(&linha, &size, stdin);
+            int numArgs = 0;
+
+            char** argumentos = commandIntoArgs(linha,&numArgs); //desalocar depois
+            
+            reg = getRegistro_Binario(binario, atoi(argumentos[0]));
+            print_Registro(reg);
+            completaRegistro_Atualizacao(argumentos, reg);
+            print_Registro(reg);
+            atualizaRegistro_binario(binario, reg);
+            
+            free_Registro(reg);
+            free(argumentos);
+            free(linha);
+        }
+
+        fecha_binario(binario);
+        binarioNaTela(nomeArq);
+    }
+
+    else
+    {
+        printf("Falha no processamento do arquivo.");
+    }
+    return; 
 }
 
 void menu(){

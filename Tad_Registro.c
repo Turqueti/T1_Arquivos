@@ -259,6 +259,11 @@ void setSexoBebe_Registro(REGISTRO* reg, char sexoBebe){
 */
 void setDataNascimento_Registro(REGISTRO* reg, char dataNascimento[10]){
     
+    if(!strncmp(dataNascimento, "NULO", 4))
+    {
+        reg->dataNascimento[0]= '\0';
+        return;
+    }
     for (int i = 0; i < 10; i++)
     {
         reg->dataNascimento[i] = dataNascimento[i];
@@ -275,6 +280,11 @@ void setDataNascimento_Registro(REGISTRO* reg, char dataNascimento[10]){
 */
 void setEstadoMae_Registro(REGISTRO* reg, char estadoMae[2]){
     
+    if(!strncmp(estadoMae, "NULO", 4))
+    {
+        reg->estadoMae[0]= '\0';
+        return;
+    }
     for (int i = 0; i < 2; i++)
     {
         reg->estadoMae[i] = estadoMae[i];
@@ -291,6 +301,11 @@ void setEstadoMae_Registro(REGISTRO* reg, char estadoMae[2]){
 */
 void setEstadoBebe_Registro(REGISTRO* reg, char estadoBebe[2]){
     
+    if(!strncmp(estadoBebe, "NULO", 4))
+    {
+        reg->estadoBebe[0]= '\0';
+        return;
+    }
     for (int i = 0; i < 2; i++)
     {
         reg->estadoBebe[i] = estadoBebe[i];
@@ -310,6 +325,12 @@ void setCidadeBebe_Registro(REGISTRO* reg, char* cidadeBebe){
     if(reg->cidadeBebe != NULL){
         free(reg->cidadeBebe);
     }
+
+    if(!strncmp(cidadeBebe, "NULO", 4))
+    {
+        reg->cidadeBebe = NULL;
+        return;
+    }
     int tam = strlen(cidadeBebe);
     char* temp = (char*)malloc((sizeof(char)*tam)+1);
     strcpy(temp,cidadeBebe);
@@ -328,6 +349,12 @@ void setCidadeMae_Registro(REGISTRO* reg, char* cidadeMae){
 
     if(reg->cidadeMae != NULL){
         free(reg->cidadeMae);
+    }
+
+    if(!strncmp(cidadeMae, "NULO", 4))
+    {
+        reg->cidadeMae = NULL;
+        return;
     }
     int tam = strlen(cidadeMae);
     char* temp = (char*)malloc((sizeof(char)*tam)+1);

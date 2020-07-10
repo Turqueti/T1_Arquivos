@@ -20,6 +20,7 @@ int excluiRegistro_binario(FILE* file, int RRN);
 int getQuantidadeRegistros_binario(FILE *file);
 int getQuantidadeRegistrosTotal_binario(FILE *file);
 void insere_binario(FILE *file, REGISTRO *reg);
+void atualizaRegistro_binario(FILE* file, REGISTRO* reg);
 int verificaIntegridade_binario(FILE* file);
 
 #endif

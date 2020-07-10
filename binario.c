@@ -109,6 +109,19 @@ void atualizaRemovidos(FILE *file)
     return;
 }
 
+void atualizaAtualizados(FILE *file)
+{
+    if(file == NULL) return;
+    int nReg;
+    fseek(file, N_REG_ATUALIZADOS, SEEK_SET);
+
+    fread(&nReg, sizeof(int), 1, file);
+    nReg++;
+    fseek(file, N_REG_ATUALIZADOS, SEEK_SET);
+    fwrite(&nReg, sizeof(int), 1, file);
+    return;
+}
+
 /*
     Escreve uma quatidade de '$' em sequencia em algum ponto do arquivo
 
@@ -352,7 +365,6 @@ int getQuantidadeRegistrosTotal_binario(FILE *file)
 void insere_binario(FILE *file, REGISTRO *reg)
 {
     if(file == NULL) return;
-    if(!verificaIntegridade_binario(file)) return;
     char zero = '\0';
     int idNascimento = getIdNascimento_Registro(reg);
     int idadeMae = getIdadeMae_Registro(reg);
@@ -400,6 +412,58 @@ void insere_binario(FILE *file, REGISTRO *reg)
     atualizaProxReg(file);
     atualizaNReg(file, '1');
     return;
+}
+
+void atualizaRegistro_binario(FILE* file, REGISTRO* reg)
+{
+    if(file == NULL) return;
+    char zero = '\0';
+    int idNascimento = getIdNascimento_Registro(reg);
+    int idadeMae = getIdadeMae_Registro(reg);
+    char dataNascimento[10];
+    strncpy(dataNascimento, getDataNascimento_Registro(reg),10);
+    char sexoBebe = getSexoBebe_Registro(reg);
+    char estadoMae[2];
+    strncpy(estadoMae, getEstadoMae_Registro(reg),2);
+    char estadoBebe[2];
+    strncpy(estadoBebe,getEstadoBebe_Registro(reg),2);
+    char *cidMae, *cidBB;
+
+    cidMae = getCidadeMae_Registro(reg);
+    cidBB = getCidadeBebe_Registro(reg);
+    if(cidMae == NULL) cidMae = &zero;
+    if(cidBB == NULL) cidBB = &zero;
+    int tam1 = strlen(cidMae);
+    int tam2 = strlen(cidBB);
+    fseek(file, 128 + ((getIdNascimento_Registro(reg) - 1) * 128), SEEK_SET);
+
+    fwrite(&tam1, sizeof(int), 1, file);
+    fwrite(&tam2, sizeof(int), 1, file);
+    fwrite(cidMae, tam1 * sizeof(char), 1, file);
+    fwrite(cidBB, tam2 * sizeof(char), 1, file);
+    file = escreveLixo(file, ( (104 - (tam1+tam2+7)))); //TODO: Verificar se esta certo
+    
+    fwrite(&idNascimento, sizeof(int), 1, file);
+    fwrite(&idadeMae, sizeof(int), 1, file);
+
+    if(strlen(dataNascimento) > 0)
+        fwrite(dataNascimento,10 * sizeof(char), 1, file);
+    else file = escreveLixoEstatico(file, 10);
+
+    
+    fwrite(&sexoBebe, sizeof(char), 1, file);
+
+    if(strlen(estadoMae) > 0)
+        fwrite(estadoMae, 2 * sizeof(char), 1, file);
+    else file = escreveLixoEstatico(file, 2);
+
+    if(strlen(estadoBebe) > 0)
+        fwrite(estadoBebe, 2 * sizeof(char), 1, file);
+    else file = escreveLixoEstatico(file, 2);
+
+    atualizaAtualizados(file);
+    return;
+
 }
 
 /*

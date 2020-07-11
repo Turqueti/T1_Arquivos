@@ -120,7 +120,7 @@ PAGINA* cria_pagina(){
         pag->descendentes[i] = -1;
     }
     
-    // pag->descendentes[ORDEM] = -1;
+    pag->descendentes[ORDEM - 1] = -1;
 
     return pag;
 }

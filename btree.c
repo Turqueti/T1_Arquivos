@@ -111,7 +111,7 @@ CHAVE* cria_chave(){
 
 PAGINA* cria_pagina(){
     PAGINA* pag = malloc(sizeof(PAGINA));
-    pag->nivel = 22;
+    pag->nivel = -1;
     pag->nroChaves = 0;
     
     for (int i = 0; i < ORDEM - 1; i++)

@@ -12,6 +12,7 @@ NOMES: vitor turqueti / Guilherme Holanda Sanches
 #include "binario.h"
 #include "binarioNaTela.h"
 #include "command.h"
+#include "btree.h"
 
 
 void csvHandler(char* entrada, char* saida){
@@ -395,8 +396,6 @@ void funcionalidade6(char* nomeArq,int nInsercoes){
     
 }
 
-
-
 void funcionalidade7(char* nomeArq,int nAtualizacoes)
 {
     REGISTRO *reg;
@@ -472,6 +471,15 @@ void menu(){
     if(!strcmp(argumentos[0],"6")){
         funcionalidade6(argumentos[1], atoi(argumentos[2]));
     }
+
+    if (!strcmp(argumentos[0],"11"))
+    {
+        FILE* f = NULL; 
+        f = fopen(argumentos[1],"rb+");
+        carrega_Btee_from_bin(f);
+        fclose(f);
+    }
+    
 
 
 

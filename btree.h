@@ -1,10 +1,15 @@
 #ifndef TAD_BTREE_H
 #define TAD_BTREE_H
+#include <stdio.h>
 
-#include "Tad_Registro.h"
 
-typedef struct CHAVE_ CHAVE;
-typedef struct PAGINA_ PAGINA;
-typedef struct BTREE_ BTREE;
+typedef struct _CHAVE CHAVE;
+typedef struct _PAGINA PAGINA;
+typedef struct _BTREE BTREE;
+
+FILE* cria_Btree(char* nomeArq);
+BTREE* incializa_Btree_Vazia();
+BTREE* carrega_Btee_from_bin(FILE* file);
+void print_btree(BTREE* btree);
 
 #endif

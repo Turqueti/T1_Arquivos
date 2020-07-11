@@ -18,7 +18,7 @@ struct _PAGINA
 {
     int nivel;
     int nroChaves;
-    CHAVE chaves[ORDEM-1];
+    CHAVE* chaves[ORDEM-1];
     int descendentes[ORDEM];
 };
 
@@ -31,35 +31,6 @@ struct _BTREE
     int nroChaves;
 
 };
-
-// int PesquisaBinaria (int vet[], int chave, int Tam)
-// {
-//      int inf = 0;
-//      int sup = Tam-1;
-//      int meio;
-//      while (inf <= sup)
-//      {
-//           meio = (inf + sup)/2;
-//           if (chave == vet[meio])
-//                return meio;
-//           if (chave < vet[meio])
-//                sup = meio-1;
-//           else
-//                inf = meio+1;
-//      }
-//      return -1;   // não encontrado
-// }
-
-// int buscaRecursiva_btree(PAGINA *pag, int idPesquisa)
-// {
-//     if(pag == NULL) return NAOENCONTRADO;
-
-// }
-
-// int busca_btree(BTREE *indice, int idPesquisa)
-// {
-//     return buscaRecursiva_btree(indice->raiz, idPesquisa);
-// }
 
 FILE* cria_Btree(char* nomeArq){
     BTREE* cabecalho = incializa_Btree_Vazia();
@@ -130,6 +101,47 @@ void print_btree(BTREE* btree){
     printf("nroChaves: %d\n",btree->nroChaves);
 }
 
+CHAVE* cria_chave(){
+    CHAVE* chave = malloc(sizeof(CHAVE));
+    chave->idregistro = -1;
+    chave->rrnRegistro = -1;
+
+    return chave;
+}
+
 PAGINA* cria_pagina(){
+    PAGINA* pag = malloc(sizeof(PAGINA));
+    pag->nivel = 22;
+    pag->nroChaves = 0;
+    
+    for (int i = 0; i < ORDEM - 1; i++)
+    {
+        pag->chaves[i] = cria_chave();
+        pag->descendentes[i] = -1;
+    }
+    
+    pag->descendentes[ORDEM] = -1;
+
+    return pag;
+}
+
+/*
+    insere uma pagina no rnn indicado
+*/
+void insere_pagina(FILE* file,PAGINA* pagina,int rnn){
+
+    fseek(file,TAMPAG*rnn,SEEK_SET);
+    fwrite(&pagina->nivel,4,1,file);
+    fwrite(&pagina->nroChaves,4,1,file);
+    for (int i = 0; i < ORDEM - 1 ; i++)
+    {
+        fwrite(&pagina->chaves[i]->idregistro,4,1,file);
+        fwrite(&pagina->chaves[i]->rrnRegistro,4,1,file);
+
+    }
+    for (int i = 0; i < ORDEM; i++)
+    {
+        fwrite(&pagina->descendentes[i],4,1,file);
+    }
     
 }

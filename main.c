@@ -474,9 +474,12 @@ void menu(){
 
     if (!strcmp(argumentos[0],"11"))
     {
-        FILE* f = NULL; 
-        f = fopen(argumentos[1],"rb+");
-        carrega_Btee_from_bin(f);
+        FILE* f = NULL;
+        
+        f = fopen(argumentos[1],"wb+");
+        // PAGINA* p = cria_pagina();
+        // insere_pagina(f,p,1);
+        // carrega_Btee_from_bin(f);
         fclose(f);
     }
     

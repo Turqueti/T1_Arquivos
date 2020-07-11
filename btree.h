@@ -11,5 +11,8 @@ FILE* cria_Btree(char* nomeArq);
 BTREE* incializa_Btree_Vazia();
 BTREE* carrega_Btee_from_bin(FILE* file);
 void print_btree(BTREE* btree);
+CHAVE* cria_chave();
+PAGINA* cria_pagina();
+void insere_pagina(FILE* file,PAGINA* pagina,int rnn);
 
 #endif

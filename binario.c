@@ -467,7 +467,7 @@ void atualizaRegistro_binario(FILE* file, REGISTRO* reg)
 }
 
 /*
-    erifica a integridade de um arquivo binario atraves do seu primeiro byte
+    Verifica a integridade de um arquivo binario atraves do seu primeiro byte
 
     Parametros:
     [in] FILE* file
@@ -485,3 +485,4 @@ int verificaIntegridade_binario(FILE* file)
     fread(&ret,sizeof(char),1,file);
     return (int)ret - '0';
 }
+

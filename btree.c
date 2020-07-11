@@ -114,13 +114,13 @@ PAGINA* cria_pagina(){
     pag->nivel = -1;
     pag->nroChaves = 0;
     
-    for (int i = 0; i < ORDEM - 1; i++)
+    for (int i = 0; i < (ORDEM - 1); i++)
     {
         pag->chaves[i] = cria_chave();
         pag->descendentes[i] = -1;
     }
     
-    pag->descendentes[ORDEM] = -1;
+    // pag->descendentes[ORDEM] = -1;
 
     return pag;
 }
@@ -145,3 +145,60 @@ void insere_pagina(FILE* file,PAGINA* pagina,int rnn){
     }
     
 }
+
+PAGINA* carrega_pagina(FILE* file,int rnn){
+    
+    PAGINA* pag = cria_pagina();
+
+    fseek(file,TAMPAG*rnn,SEEK_SET);
+    fread(&pag->nivel,4,1,file);
+    fread(&pag->nroChaves,4,1,file);
+
+    for (int i = 0; i < ORDEM - 1; i++)
+    {
+        fread(&pag->chaves[i]->idregistro,4,1,file);
+        fread(&pag->chaves[i]->rrnRegistro,4,1,file);
+    }
+
+    for (int i = 0; i < ORDEM; i++)
+    {
+        fread(&pag->descendentes[i],4,1,file);
+    }
+    
+
+    return pag;
+}
+
+void print_pagina(PAGINA* pag){
+    
+    printf("nivel: %d\n",pag->nivel);
+    printf("nroChaves: %d\n",pag->nroChaves);
+
+    printf("\nchaves:\n");
+    for (int i = 0; i < ORDEM - 1; i++)
+    {
+        print_chave(pag->chaves[i]);
+    }
+
+    printf("\ndescendentes:\n");
+    for (int i = 0; i < ORDEM; i++)
+    {
+        printf("descendente[%d]: %d\n",i,pag->descendentes[i]);
+    }
+
+    printf("\n");
+}
+
+void print_chave(CHAVE* chave){
+    printf("chave: %02d   rnnRegistro: %02d\n",chave->idregistro,chave->rrnRegistro);
+}
+
+void free_pagina(PAGINA* pag){
+    for (int i = 0; i < ORDEM - 1; i++)
+    {
+        free(pag->chaves[i]);
+    }
+    free(pag);
+
+}
+

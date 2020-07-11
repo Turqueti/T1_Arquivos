@@ -475,14 +475,39 @@ void menu(){
     if (!strcmp(argumentos[0],"11"))
     {
         FILE* f = NULL;
-        
+
         f = fopen(argumentos[1],"wb+");
-        // PAGINA* p = cria_pagina();
-        // insere_pagina(f,p,1);
-        // carrega_Btee_from_bin(f);
+        cria_Btree(argumentos[1]);
         fclose(f);
     }
-    
+    if (!strcmp(argumentos[0],"12"))
+    {
+        FILE* f = NULL;
+
+        f = fopen(argumentos[1],"rb+");
+        PAGINA* p = cria_pagina();
+        insere_pagina(f,p,1);
+        free_pagina(p);
+        fclose(f);
+    }
+    if (!strcmp(argumentos[0],"13"))
+    {
+        FILE* f = NULL;
+
+        f = fopen(argumentos[1],"rb+");
+        if (f == NULL)
+        {
+            printf("erro ao carregar arquivo\n");
+            return;
+        }
+        
+
+        PAGINA* p = carrega_pagina(f,1);
+        print_pagina(p);
+
+        free_pagina(p);
+        fclose(f);
+    }
 
 
 

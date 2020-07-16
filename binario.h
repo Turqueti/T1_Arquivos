@@ -1,6 +1,12 @@
 #ifndef TAD_BINARIO_H
 #define TAD_BINARIO_H
 
+#define N_PROX_REG 1
+#define N_REG_INSER 5
+#define N_REG_REMOV 9
+#define N_REG_ATUALIZADOS 13
+#define PRIMEIRO_REGISTRO 128
+
 #include <stdio.h>
 #include <stdio.h>
 #include <string.h>

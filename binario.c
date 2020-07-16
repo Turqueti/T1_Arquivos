@@ -1,8 +1,4 @@
-#define N_PROX_REG 1
-#define N_REG_INSER 5
-#define N_REG_REMOV 9
-#define N_REG_ATUALIZADOS 13
-#define PRIMEIRO_REGISTRO 128
+
 
 #include "binario.h"
 

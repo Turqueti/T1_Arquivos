@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "binario.h"
+#include "Tad_Registro.h"
 
 #define ORDEM 6
 #define NAOENCONTRADO -1
@@ -200,5 +201,63 @@ void free_pagina(PAGINA* pag){
     }
     free(pag);
 
+}
+
+int buscaRecursiva_btree(FILE* file, int* rrnPag, int id)
+{
+    int ret = 0;
+    if(rrnPag == -1) return NAOENCONTRADO;
+    PAGINA *pag = carrega_pagina(file, rrnPag);
+
+    for (int i = 0; i < pag->nroChaves - 1; i++)
+    {
+        if(pag->chaves[i]->idregistro == id)
+        {
+            ret = pag->chaves[i]->rrnRegistro;
+            free_pagina(pag);
+            return ret;
+        }
+        if(pag->chaves[i]->idregistro > id)
+        {
+            ret = buscaRecursiva_btree(file, pag->descendentes[i], id);
+            free_pagina(pag);
+            return ret;
+        }
+    }
+    ret = buscaRecursiva_btree(file, pag->descendentes[pag->nroChaves], id);
+    free_pagina(pag);
+    return ret;
+}
+
+int busca_btree(FILE *file, int id)
+{
+    BTREE *tree = carrega_Btee_from_bin(file);
+    return buscaRecursiva_btree(file, tree->raiz, id);
+    free(tree);
+}
+
+int insere_btree(FILE* indexAB, FILE* binario)
+{
+    if(indexAB == NULL || binario == NULL)return -1;
+
+    int nRegistros = 0;
+    REGISTRO *regAux = NULL;
+    CHAVE *chaveAux = NULL;
+    chaveAux = cria_chave();
+
+    fseek(binario, N_REG_INSER, SEEK_SET);
+    fread(&nRegistros, 4, 1, binario);
+
+    for (int i = 0; i < nRegistros; i++)
+    {
+        regAux = getRegistro_Binario(binario, i);
+        chaveAux = cria_chave();
+        chaveAux->rrnRegistro = i;
+        chaveAux->idregistro = getIdNascimento_Registro(regAux);
+
+        
+        free_Registro(regAux);
+        free(chaveAux);
+    }
 }
 
